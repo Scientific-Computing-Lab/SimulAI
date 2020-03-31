@@ -48,33 +48,13 @@ One variation of the Template Matching problem is defined as follows: Given an e
 
 ## 5. InfoGAN
 
-The following values can be specified for `--dataset`:
+Generative Advreserial Networks (GANs) is a framework capable to learn  network $G$, that transforms noise variable $z$ from some noise distribution into a generated sample $G(z)$, while training the generator is optimized against a \textit{discriminator} network $D$, which targets to distinguish between real samples with generated ones. The fruitful competition of both $G$ and $D$, in the form of MinMax game, allows $G$ to generate samples such that $D$ will have difficulty with distinguishing real samples between them. The ability to generate indistinguishable new data in an unsupervised manner is one example of a machine learning approach that is able to understand an underlying deep, abstract and generative representation of the data. Information Maximizing Generative Adversarial Network (InfoGAN) utilizes latent code variables Ci, which are added to the noise variable. These noise variables are randomly generated, although from a user-specified domain.
+The latent variables impose an Information Theory Regularization term to the optimization problem, which forces G to preserve the information stored in $c_i$ through the generation process. This allows learning interpretative and meaningful representations of the data, with a negligible computation cost, on top of a GAN. The high-abstract-level representation can be extracted from the discriminator (e.g. the last layer before the classification) into a features vector. We use these features in order to measure the similarity between some input image to any other image, by applying some distance function (e.g. L2 norm) on the features of the input to the features of the other image. This methodology provides the ability to order images similarity to a given input image .
 
-- **CIFAR-10**: Interface to the [CIFAR-10][3] dataset with 10 classes.
-- **CIFAR-100**: Interface to the [CIFAR-100][3] dataset with 100 classes.
-- **CIFAR-100-a**: The first 50 classes of [CIFAR-100][3].
-- **CIFAR-100-b**: The second 50 classes of [CIFAR-100][3].
-- **CIFAR-100-b-consec**: The second 50 classes of [CIFAR-100][3], but numbered from 0-49 instead of 50-99.
-- **ILSVRC**: Interface to the [ILSVRC 2012][4] dataset.
-- **NAB**: Interface to the [NABirds][5] dataset, expecting images in the sub-directory `images`.
-- **NAB-large**: The NABirds dataset with the default image size being twice as large (512 pixels instead of 256, cropped to 448x448).
-- **CUB**: Interface to the [Caltech-UCSD Birds][22] dataset, expecting images in the sub-directory `images`. Despite the lack of any suffix, this dataset interface is equivalent to `NAB-large`, just with the CUB data. That means, the input image size is 448x448.
-- **Cars**: Interface to the [Stanford Cars][29] dataset with an input image size of 448x448.
-- **Flowers**: Interface to the [Oxford Flowers-102][30] dataset with an input image size of 448x448.
-- **iNat** / **iNat2018**: Interface to the [iNaturalist 2018][31] dataset with 224x224 crops from images resized to 256 pixels. An underscore followed by the name of a super-category might be appended to restrict the dataset to that supercategory (e.g., "iNat_Aves").
-- **iNat-large**: Like iNat but with the default image size being twice as large (512 pixels instead of 256, cropped to 448x448). For restricting the dataset to a certain super-category, append its name before the "-large" suffix (e.g., "iNat_Aves-large").
-- **iNat2019** and **iNat2019-large**: Same as above but for the [2019 edition][32] of the iNaturalist challenge. As opposed to the previous edition, this one does not support restricting the dataset to super-classes.
+### 6. pReg
+Many Deep Learning techniques obtain state-of-the-art results for regression tasks, in a wide range of CV applications: Pose Estimation, Facial Landmark Detection, Age Estimation, Image Registration and Image Orientation. Most of the deep learning architectures used for regression tasks on images are Convolutional Neural Networks (ConvNets), which are usually composed of blocks of Convolutional layers followed by a Pooling layer, and finally Fully-Connected layers. The dimension of the output layer depends on the task, and its activation function is usually linear or sigmoid. 
 
-To all datasets except CIFAR, one of the following suffixes may be appended:
-
-- `-ilsvrcmean`: use mean and standard deviation from the ILSVRC dataset for pre-processing.
-- `-caffe`: Caffe-style pre-processing (i.e., BGR channel ordering and no normalization of standard deviation).
-
-For ILSVRC, you need to move the test images into sub-directories for each class. [This script][6] could be used for this, for example.
-
-Own dataset interfaces can be defined by creating a new module in the [`datasets`](datasets/) package, defining a class derived from [`FileDatasetGenerator`](datasets/common.py), importing it in [`datasets/__init__.py`](datasets/__init__.py), and adding a branch for it in the `get_data_generator` function defined there.
-
-### 2.5. Available network architectures
+ConvNets can be used for retrieving the parameters of an experiment image, via regression. Our model consists of 3 Convolutional layers with 64 filters, with a kernel size $5\times 5$, and with $l_2$ regularization, each followed by a Max-Pooling layer, a Dropout of $0.1$ rate and finally Batch Normalization. Then, there are two Fully-Connected layers of 250 and 200 features, which are separated again by a Batch Normalization layer. Finally, the Output layer of our network has 2 features (as will described next), and is activated by sigmoid to prevent the exploding gradients problem. Since the most significant parameters for describing each image are Amplitude and Time - which \textit{pReg} is trained to predict - we used only a subset of \textit{RayleAI} for the training set, namely images with the following parameters: Atwood of [0.08, 0.5] (with a stride of 0.02), gravity of 625, 700, 750, 800, amplitude of 0.1, 0.5 (with a stride of 0.1 and T in [0.1, 0.6] (with a stride of 0.01). We fixed a small amount of values for Gravity and for Amplitude, so the network will not try and learn the variance that these parameters impose while expanding our database with as minimal noise as possible. We chose the value ranges of Atwood and Time to expose the model to images with both small and big perturbations, such that the amount of the latter ones will not be negligible. Our reduced training set consists of $\sim 16K$ images, and our validation set consists of $\sim 4K$ images. Nonetheless, for increasing generalization and for decreasing model overfitting, we employed data augmentation. Since there is high significance for the perspective from which each image is taken, the methods of data augmentation should be carefully chosen: Rotation, shifting and flipping methods may generate images such that the labels of the original parameters do not fit for them. Therefore, we augment our training set with only zooming in/out (zoom range=0.1) via TensorFlow preprocessing.
 
 #### 2.5.1. Tested
 
