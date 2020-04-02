@@ -5,11 +5,8 @@ import argparse
 import os
 import matplotlib.pyplot as plt
 from scipy import stats
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, confusion_matrix
-from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.preprocessing import PolynomialFeatures
 from os import listdir
 from os.path import isfile, join
 def get_error(simul, real, k=1, mse=False):
@@ -27,20 +24,14 @@ def get_error(simul, real, k=1, mse=False):
     else:
         if k > 1:
             mse = [0] * len(simul[:])
-            # dev = [0] * len(simul[:])
             for i in range(len(simul[:])):
                 for j in range(k):
-                    # mse[i] = mse[i] + (abs(simul[i][j]) - abs(real[j])) ** 2
-                    # dev[i] = dev[i] + (abs(real[j]) ** 2)
                     mse[i] = mse[i] + (abs(abs(simul[i][j]) - abs(real[j])) / abs(real[j]))
-                # mse[i] = (mse[i] / dev[i]) ** 0.5
 
         else:
             mse = [0] * len(simul)
-            dev = [0] * len(simul)
             for i in range(len(simul)):
-                mse[i] = mse[i] + (abs(abs(simul[i]) - abs(real)) / abs(real))                # dev[i] = (abs(real) ** 2)
-                # mse[i] = (mse[i] / dev[i]) ** 0.5
+                mse[i] = mse[i] + (abs(abs(simul[i]) - abs(real)) / abs(real))
     return mse
 
 
@@ -58,78 +49,44 @@ def get_parameters(path):
         elif tmp[i].__contains__("atwood"):
             at = tmp[i + 1].split('/')[0]
     t1 = "".join(path.split('.png'))
-    t1 = t1.split("time")[1]
+    splited = t1.split("time")
+    t1 = splited[len(splited) - 1]
     t1 = t1[1:]
     return grav, amp, at, t1
 
 
-def plot_mse(file_dist1, info_rank, index, title, chisq=False):
+def plot_mse(file_dist1, info_rank, index, title):
     j = 1
     clr = ["or", "ok", "or", "ok", "or", "ok", "or", "ok", "or"]
-    if not chisq:
-        for file_dist in file_dist1:
-            plt.figure(j)
-            plt.title(title[j - 1])
+    for file_dist in file_dist1:
+        plt.figure(j)
+        plt.title(title[j - 1])
+        lowerlims = np.array([0] * len(info_rank))
+        uplims = np.array([0] * len(info_rank))
+        for i in range(len(info_rank)):
+            if file_dist[i] > info_rank[i]:
+                lowerlims[i] = 0
+                uplims[i] = 1
+            else:
+                lowerlims[i] = 1
+                uplims[i] = 0
 
-            lowerlims = np.array([0] * len(info_rank))
-            uplims = np.array([0] * len(info_rank))
-            for i in range(len(info_rank)):
-                if file_dist[i] > info_rank[i]:
-                    lowerlims[i] = 0
-                    uplims[i] = 1
-                else:
-                    lowerlims[i] = 1
-                    uplims[i] = 0
+        l2, caps, c2 = plt.errorbar(index, file_dist, lolims=lowerlims, \
+                                    uplims=uplims, yerr=np.abs(np.subtract(file_dist, info_rank)),
+                                    elinewidth=0.1,markeredgewidth=2,capsize=2, marker="o", ecolor="b", markersize=2, fmt=clr[j - 1])
 
-            l2, caps, c2 = plt.errorbar(index, file_dist, lolims=lowerlims, \
-                                        uplims=uplims, yerr=np.abs(np.subtract(file_dist, info_rank)),
-                                        elinewidth=0.1,markeredgewidth=2,capsize=2, marker="o", ecolor="b", markersize=2, fmt=clr[j - 1])
-            # index = np.array(index)
-            # index = index[..., np.newaxis]
-            # poly_fit = PolynomialFeatures(degree=(len(index)**0.5))
-            # index_x = poly_fit.fit_transform(index)
-            #
-            # model = LinearRegression()
-            # model.fit(index_x, file_dist)
-            # y_poly_pred = model.predict(index_x)
-            # plt.plot(index, y_poly_pred)
-            x = np.array(index)
+        for cap in caps:
+            cap.set_marker("o")
 
-            # transforming the data to include another axis
-            x = x[:, np.newaxis]
-            y = file_dist[:, np.newaxis]
-            file_dist = file_dist[:, np.newaxis]
+        plt.xlabel("Index of LIRE")
+        plt.ylabel("Score")
+        plt.plot([], [], "-r", label="Physical Loss")
+        plt.plot([], [], "-b", label="LIRE Score")
+        plt.legend(loc="lower right")
+        j = j + 1
 
-            polynomial_features = PolynomialFeatures(degree=10)
-            x_poly = polynomial_features.fit_transform(x)
-
-            model = LinearRegression()
-            model.fit(x_poly, y)
-            y_poly_pred = model.predict(x_poly)
-            plt.plot(index, y_poly_pred, linewidth=3)
-            # chisq = []
-            # for k in range(len(file_dist)):
-            #     chisq.append(stats.chisquare(file_dist[k], f_exp=info_rank[k])[0])
-            # plt.plot(index, chisq)
-            # plt.plot(index, file_dist)
-            for cap in caps:
-                cap.set_marker("o")
-            # plt.plot(index, m, yerr=m + mse[1], color="or")
-            j = j + 1
-            plt.xlabel("Index of Lire CBIR")
-            plt.ylabel("Normalized rating")
-    else:
-        for file_dist in file_dist1:
-            plt.figure(j)
-            plt.title(title[j - 1])
-            plt.plot(index, stats.chisquare(file_dist1, f_exp=info_rank)[1])
-            # plt.errorbar(index, file_dist,  marker="o", ecolor="g", fmt=clr[j - 1])
-
-            j = j + 1
-            plt.xlabel("Index of Lire CBIR")
-            plt.ylabel("Normalized rating")
     plt.show()
-    plt.figsave("lire_figures.png")
+    plt.savefig("LIRE_graphs.png")
 
 def combine_arrays(arr1, arr2, arr3=None, arr4=None):
     if arr3 is combine_arrays.__defaults__[0] and arr4 is combine_arrays.__defaults__[1]:
@@ -177,30 +134,42 @@ def main(json_path):
     gravity_median_show = []
     amp_median_show = []
     at_median_show = []
+    time_median_show = []
     gravity_amp_median_show = []
     gravity_at_median_show = []
     amp_at_median_show = []
     gravity_amp_at_median_show = []
-    infogan_dist_median_show = []
-    gravity_median = np.zeros(shape=(len(data["data"]), len(data["data"][0]) - 1))
-    amplitude_median = np.zeros(shape=(len(data["data"]), len(data["data"][0]) - 1))
-    atwood_median = np.zeros(shape=(len(data["data"]), len(data["data"][0]) - 1))
-    dist_median = np.zeros(shape=(len(data["data"]), len(data["data"][0]) - 1))
-    infogan_dist_median = np.zeros(shape=(len(data["data"]), len(data["data"][0]) - 1))
-    gravity_amp_median = np.zeros(shape=(len(data["data"]), len(data["data"][0]) - 1))
-    gravity_at_median = np.zeros(shape=(len(data["data"]), len(data["data"][0]) - 1))
-    amp_at_median = np.zeros(shape=(len(data["data"]), len(data["data"][0]) - 1))
-    gravity_amp_at_median = np.zeros(shape=(len(data["data"]), len(data["data"][0]) - 1))
-    test_paths = [f for f in listdir("/home/yonif/simulai_test_10000") if isfile(join("/home/yonif/simulai_test_10000", f))]
+    time_at_median_show = []
+    lire_dist_median_show = []
+    gravity_median = np.zeros(shape=(len(data["data"]), len(data["data"][0])))
+    amplitude_median = np.zeros(shape=(len(data["data"]), len(data["data"][0])))
+    atwood_median = np.zeros(shape=(len(data["data"]), len(data["data"][0])))
+    time_median = np.zeros(shape=(len(data["data"]), len(data["data"][0])))
+    time_at_median = np.zeros(shape=(len(data["data"]), len(data["data"][0])))
+    gravity_amp_median = np.zeros(shape=(len(data["data"]), len(data["data"][0])))
+    gravity_at_median = np.zeros(shape=(len(data["data"]), len(data["data"][0])))
+    amp_at_median = np.zeros(shape=(len(data["data"]), len(data["data"][0])))
+    gravity_amp_at_median = np.zeros(shape=(len(data["data"]), len(data["data"][0])))
+    lire_dist_median = np.zeros(shape=(len(data["data"]), len(data["data"][0])))
+
+    ########################################
+    #in order to make the graphs, we conduct image similarity tests_beween group of images and the entire_database.
+    #the paths of the images tested are in the test_paths list, so it helps us to find the tested image in each test.
+    #notice that the json of the data should be created in accordance to the order of the images in test_paths
+    ########################################
+    #test_paths = [f for f in listdir("simulai_test_10000") if isfile(join("simulai_test_10000", f))]
+    test_paths = [f for f in listdir("simulai_test_longtimes") if isfile(join("simulai_test_longtimes", f))]
+
     for comparison, real_path in zip(data["data"],test_paths) :
-        real_path = "/home/yonif/SimulAI/SimulationsBW3/" + real_path
+        real_path = "SimulationsBW3/" + real_path
+        real_path = real_path.replace("_time","/time")
         num_test = num_test + 1
-        gravity = np.zeros(shape=(len(comparison) - 1))
-        amplitode = np.zeros(shape=(len(comparison) - 1))
-        atwood = np.zeros(shape=(len(comparison) - 1))
-        index = np.zeros(shape=(len(comparison) - 1))
-        time = np.zeros(shape=(len(comparison) - 1))
-        w = np.zeros(shape=(len(comparison) - 1))
+        gravity = np.zeros(shape=(len(comparison)))
+        amplitode = np.zeros(shape=(len(comparison)))
+        atwood = np.zeros(shape=(len(comparison)))
+        index = np.zeros(shape=(len(comparison)))
+        time = np.zeros(shape=(len(comparison)))
+        w = np.zeros(shape=(len(comparison)))
         title = []
         j = 0
         real_g, real_amp, real_at, real_time = get_parameters(real_path)
@@ -211,93 +180,96 @@ def main(json_path):
         for i in range(len(comparison)):
             path = (comparison[i]["path"]).replace("=", "_")
             dist = comparison[i]["lire_distance"]
-            if path == real_path :
-                print("yassssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss")
-                continue
-            else:
-                w[j] = (comparison[i]["lire_distance"])
-                index[j] = np.int(comparison[i]["index"])
-                g, amp, at, t = get_parameters(path)
-                gravity[j] = (np.float64(g))
-                amplitode[j] = (np.float64(amp))
-                atwood[j] = (np.float64(at))
-                time[j] = (np.float64(t))
-                j = j + 1
+            w[j] = (comparison[i]["lire_distance"])
+            index[j] = np.int(comparison[i]["index"])
+            g, amp, at, t = get_parameters(path)
+            gravity[j] = (np.float64(g))
+            amplitode[j] = (np.float64(amp))
+            atwood[j] = (np.float64(at))
+            time[j] = (np.float64(t))
+            j = j + 1
 
         grav_amp_at_combined = combine_arrays(gravity, amplitode, atwood)
         grav_amp_combined = combine_arrays(gravity, amplitode)
         grav_at_combined = combine_arrays(gravity, atwood)
         amp_at_combined = combine_arrays(amplitode, atwood)
+        time_at_combined = combine_arrays(time, atwood)
         real_grav_amp_at_combined = combine_float(real_g, real_amp, real_at)
         real_grav_amp_combined = combine_float(real_g, real_amp)
         real_grav_at_combined = combine_float(real_g, real_at)
         real_amp_at_combined = combine_float(real_amp, real_at)
+        real_time_at_combined = combine_float(real_time, real_at)
 
-        gravity_norm_err = min_max_normalize(get_error(gravity, real_g))
-        amp_norm_err = min_max_normalize(get_error(amplitode, real_amp))
-        at_norm_err = min_max_normalize(get_error(atwood, real_at))
-        gravity_amp_norm_err = min_max_normalize(get_error(grav_amp_combined, real_grav_amp_combined, k=2))
-        gravity_at_norm_err = min_max_normalize(get_error(grav_at_combined, real_grav_at_combined, k=2))
-        amp_at_norm_err = min_max_normalize(get_error(amp_at_combined, real_amp_at_combined, k=2))
-        gravity_amp_at_norm_err = min_max_normalize(get_error(grav_amp_at_combined,
-                                      real_grav_amp_at_combined, k=3))
+        gravity_norm_err = get_error(gravity, real_g)
+        amp_norm_err = get_error(amplitode, real_amp)
+        at_norm_err = get_error(atwood, real_at)
+        gravity_amp_norm_err = get_error(grav_amp_combined, real_grav_amp_combined, k=2)
+        gravity_at_norm_err = get_error(grav_at_combined, real_grav_at_combined, k=2)
+        amp_at_norm_err = get_error(amp_at_combined, real_amp_at_combined, k=2)
+        gravity_amp_at_norm_err = get_error(grav_amp_at_combined, real_grav_amp_at_combined, k=3)
+        time_at_norm_err = get_error(time_at_combined, real_time_at_combined, k=2)
+        time_norm_err = get_error(time, real_time)
 
         # Median
         gravity_median[num_test - 1, :] = gravity_norm_err
         amplitude_median[num_test - 1, :] = amp_norm_err
         atwood_median[num_test - 1, :] = at_norm_err
-        infogan_dist_median[num_test - 1, :] = w
         gravity_amp_median[num_test - 1, :] = gravity_amp_norm_err
         gravity_at_median[num_test - 1, :] = gravity_at_norm_err
         amp_at_median[num_test - 1, :] = amp_at_norm_err
         gravity_amp_at_median[num_test - 1, :] = gravity_amp_at_norm_err
+        time_median[num_test - 1:] = time_norm_err
+        time_at_median[num_test - 1:] = time_at_norm_err
+        lire_dist_median[num_test - 1, :] = w
+
         # Average
         if num_test != 1:
-            infogan_dist_avg = np.add(w, infogan_dist_avg)
             gravity_avg = np.add(gravity_norm_err, gravity_avg)
             amp_avg = np.add(amp_norm_err, amp_avg)
             at_avg = np.add(at_norm_err, at_avg)
+            time_avg = np.add(time_norm_err, time_avg)
+            time_at_avg = np.add(time_at_norm_err, time_at_avg)
             gra_amp_avg = np.add(gravity_amp_norm_err, gra_amp_avg)
             gra_at_avg = np.add(gravity_at_norm_err, gra_at_avg)
             amp_at_avg = np.add(amp_at_norm_err, amp_at_avg)
             gra_amp_at_avg = np.add(gravity_amp_at_norm_err, gra_amp_at_avg)
+            lire_dist_avg = np.add(w, lire_dist_avg)
         else:
-            infogan_dist_avg = w
             gravity_avg = gravity_norm_err
             amp_avg = amp_norm_err
             at_avg = at_norm_err
+            time_avg = time_norm_err
+            time_at_avg = time_at_norm_err
             gra_amp_avg = gravity_amp_norm_err
             gra_at_avg = gravity_at_norm_err
             amp_at_avg = amp_at_norm_err
             gra_amp_at_avg = gravity_amp_at_norm_err
-
+            lire_dist_avg = w
     mse = []
-    for i in range(len(gravity_avg)):
+    for i in range(len(at_avg)):
         gravity_median_show.append(statistics.median(gravity_median[:, i]))
         amp_median_show.append(statistics.median(amplitude_median[:, i]))
         at_median_show.append(statistics.median(atwood_median[:, i]))
+        time_median_show.append(statistics.median(time_median[:, i]))
+        time_at_median_show.append(statistics.median(time_at_median[:, i]))
         gravity_amp_median_show.append(statistics.median(gravity_amp_median[:, i]))
         gravity_at_median_show.append(statistics.median(gravity_at_median[:, i]))
         amp_at_median_show.append(statistics.median(amp_at_median[:, i]))
         gravity_amp_at_median_show.append(statistics.median(gravity_amp_at_median[:, i]))
-        infogan_dist_median_show.append(statistics.median(infogan_dist_median[:, i]))
-    gravity_median_show = min_max_normalize(gravity_median_show)
-    amp_median_show = min_max_normalize(amp_median_show)
-    at_median_show = min_max_normalize(at_median_show)
-    gravity_amp_median_show = min_max_normalize(gravity_amp_median_show)
-    gravity_at_median_show = min_max_normalize(gravity_at_median_show)
-    amp_at_median_show = min_max_normalize(amp_at_median_show)
-    gravity_amp_at_median_show = min_max_normalize(gravity_amp_at_median_show)
-    infogan_dist_median_show = min_max_normalize(infogan_dist_median_show)
+        lire_dist_median_show.append(statistics.median(lire_dist_median[:, i]))
 
-    gravity_avg_show = min_max_normalize([x / num_test for x in gravity_avg])
-    amp_avg_show = min_max_normalize([x / num_test for x in amp_avg])
-    at_avg_show = min_max_normalize([x / num_test for x in at_avg])
-    gra_amp_avg_show = min_max_normalize([x / num_test for x in gra_amp_avg])
-    gra_at_avg_show = min_max_normalize([x / num_test for x in gra_at_avg])
-    amp_at_avg_show = min_max_normalize([x / num_test for x in amp_at_avg])
-    gra_amp_at_avg_show = min_max_normalize([x / num_test for x in gra_amp_at_avg])
-    infogan_dist_avg_show = min_max_normalize([x / num_test for x in infogan_dist_avg])
+    lire_dist_median_show = min_max_normalize(lire_dist_median_show)
+
+    gravity_avg_show = [x / num_test for x in gravity_avg]
+    amp_avg_show = [x / num_test for x in amp_avg]
+    at_avg_show = [x / num_test for x in at_avg]
+    time_avg_show = [x / num_test for x in time_avg]
+    time_at_avg_show = [x / num_test for x in time_at_avg]
+    gra_amp_avg_show = [x / num_test for x in gra_amp_avg]
+    gra_at_avg_show = [x / num_test for x in gra_at_avg]
+    amp_at_avg_show = [x / num_test for x in amp_at_avg]
+    gra_amp_at_avg_show = [x / num_test for x in gra_amp_at_avg]
+    lire_dist_avg_show = [x / num_test for x in lire_dist_avg]
 
     mse.append(gravity_avg_show)
     title.append("Compare parameter: {0}".format("Gravity - Average"))
@@ -305,6 +277,10 @@ def main(json_path):
     title.append("Compare parameter: {0}".format("Amplitude - Average"))
     mse.append(at_avg_show)
     title.append("Compare parameter: {0}".format("Atwood - Average"))
+    mse.append(time_avg_show)
+    title.append("Compare parameter: {0}".format("Time - Average"))
+    mse.append(time_at_avg_show)
+    title.append("Compare parameter: {0}".format("Atwood, Time - Average"))
     mse.append(gra_amp_avg_show)
     title.append("Compare parameter: {0}".format("Gravity, Amplitude - Average"))
     mse.append(gra_at_avg_show)
@@ -315,7 +291,7 @@ def main(json_path):
     title.append("Compare parameter: {0}".format("Gravity, Amplitude, Atwood - Average"))
 
     index = range(0, len(index))
-    plot_mse(mse, infogan_dist_avg_show, index, title, False)
+    plot_mse(mse, lire_dist_avg_show, index, title)
 
     mse = []
     title = []
@@ -325,6 +301,10 @@ def main(json_path):
     title.append("Compare parameter: {0}".format("Amplitude - Median"))
     mse.append(at_median_show)
     title.append("Compare parameter: {0}".format("Atwood - Median"))
+    mse.append(time_median_show)
+    title.append("Compare parameter: {0}".format("Time - Median"))
+    mse.append(time_at_median_show)
+    title.append("Compare parameter: {0}".format("Atwood, Time - Median"))
     mse.append(gravity_amp_median_show)
     title.append("Compare parameter: {0}".format("Gravity, Amplitude - Median"))
     mse.append(gravity_at_median_show)
@@ -333,7 +313,7 @@ def main(json_path):
     title.append("Compare parameter: {0}".format("Amplitude, Atwood - Median"))
     mse.append(gravity_amp_at_median_show)
     title.append("Compare parameter: {0}".format("Gravity, Amplitude, Atwood - Median"))
-    plot_mse(mse, infogan_dist_median_show, index, title, False)
+    plot_mse(mse, lire_dist_median_show, index, title)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Runs tests with varying input sizes.')
