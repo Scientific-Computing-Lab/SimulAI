@@ -33,7 +33,6 @@ class QATM_Clustering:
         plt.ylabel('variance %')
         plt.xticks(features)
         plt.show()
-        plt.savefig("/home/yonif/SimulAI/QATM/pca_variance.png")
         PCA_components = pd.DataFrame(principalComponents)
         model = KMeans(n_clusters=4)
         model.fit(PCA_components.iloc[:, :3])
