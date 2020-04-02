@@ -44,7 +44,7 @@ The first model is the state-of-the-art database - RayleAI can be found and down
 
 LIRE is a library that provides a way to retrieve images from databases based on color and texture characteristics among other classic features. LIRE creates a Lucene index of image features using both local and global methods. For the evaluation of the similarity of two images, one can calculate their distance in the space they were indexed to. Many state-of-the-art methods for extracting features can be used, such as Gabor Texture Features, Tamura Features, or FCTH. For our purposes, we found that the Tamura Features method is better than the other methods that LIRE provides as it indexes RayleAI images in a more dispersed fashion. The Tamura feature vector of an image is an 18 double values descriptor that represents texture features in the image that correspond to human visual perception.
 
-<img src="https://user-images.githubusercontent.com/27349725/78253782-93984800-74fd-11ea-80ef-ba850b4b62dd.png" alt=On the left the experiment input image and on the right the simulation output image with its parameters>
+<img src="https://user-images.githubusercontent.com/27349725/78253782-93984800-74fd-11ea-80ef-ba850b4b62dd.png" height="300px">
 
 LIRE results with a new method evaluation - "Physical loss" (Smaller y-value is better).
 
@@ -53,8 +53,7 @@ LIRE results with a new method evaluation - "Physical loss" (Smaller y-value is 
 
 Quality-Aware Template Matching (QATM) method is a standalone template matching algorithm and a trainable layer with trainable parameters that can be used in a Deep Neural Network. QATM is inspired by assessing the matching quality of the source and target templates. It defines the <img src="https://render.githubusercontent.com/render/math?math=QATM(t,s)"> - measure as the product of likelihoods that a patch <img src="https://render.githubusercontent.com/render/math?math=s"> in <img src="https://render.githubusercontent.com/render/math?math=S"> is matched in <img src="https://render.githubusercontent.com/render/math?math=T"> and a patch <img src="https://render.githubusercontent.com/render/math?math=t"> in <img src="https://render.githubusercontent.com/render/math?math=T"> is matched in <img src="https://render.githubusercontent.com/render/math?math=S"> . Once <img src="https://render.githubusercontent.com/render/math?math=QATM(t, s)"> is computed, we can compute the template matching map for the template image <img src="https://render.githubusercontent.com/render/math?math=T"> and the target search image <img src="https://render.githubusercontent.com/render/math?math=S">. Eventually, we can find the best-matched region <img src="https://render.githubusercontent.com/render/math?math={R^*}"> which maximizes the overall matching quality. Therefore, the technique is of great need when templates are complicated and targets are noisy. Thus most suitable for RTI images from simulations and experiments. 
 
-<img src="https://user-images.githubusercontent.com/27349725/78253281-cee64700-74fc-11ea-9ae3-261c04316b3f.png
-" alt=On the left the experiment input image and on the right the simulation output image with its parameters height="400px">
+<img src="https://user-images.githubusercontent.com/27349725/78253281-cee64700-74fc-11ea-9ae3-261c04316b3f.png" height="300px">
 
 PCA and k-means clustering methodology made on QATM results.
 
@@ -63,8 +62,7 @@ PCA and k-means clustering methodology made on QATM results.
 
 Generative Advreserial Networks (GANs) is a framework capable to learn  network <img src="https://render.githubusercontent.com/render/math?math=G">, that transforms noise variable z from some noise distribution into a generated sample <img src="https://render.githubusercontent.com/render/math?math=G(z)">, while training the generator is optimized against a discriminator network <img src="https://render.githubusercontent.com/render/math?math=D">, which targets to distinguish between real samples with generated ones. The fruitful competition of both <img src="https://render.githubusercontent.com/render/math?math=G"> and <img src="https://render.githubusercontent.com/render/math?math=D">, in the form of MinMax game, allows <img src="https://render.githubusercontent.com/render/math?math=G"> to generate samples such that <img src="https://render.githubusercontent.com/render/math?math=D"> will have difficulty with distinguishing real samples between them. The ability to generate indistinguishable new data in an unsupervised manner is one example of a machine learning approach that is able to understand an underlying deep, abstract and generative representation of the data. Information Maximizing Generative Adversarial Network (InfoGAN) utilizes latent code variables <img src="https://render.githubusercontent.com/render/math?math=C_i">, which are added to the noise variable. These noise variables are randomly generated, although from a user-specified domain.
 
-<img src="https://user-images.githubusercontent.com/27349725/78253637-621f7c80-74fd-11ea-938d-625842220a8a.png
-" alt=On the left the experiment input image and on the right the simulation output image with its parameters>
+<img src="https://user-images.githubusercontent.com/27349725/78253637-621f7c80-74fd-11ea-938d-625842220a8a.png" height="300px">
 
 InfoGAN results with a new method evaluation - "Physical loss" (Smaller y-value is better).
 
@@ -77,8 +75,7 @@ On the left the experiment input image and on the right the simulation output im
 ## 7. PredRNN
 PredRNN is a state-of-the-art Recurrent Neural Network for predictive learning using LSTMs. PredRNN memorizes both spatial appearances and temporal variations in a unified memory pool. Unlike standard LSTMs, and in addition to the standard memory transition within them, memory in PredRNN can travel through the whole network in a zigzag direction, therefore from the top unit of some time step to the bottom unit of the other. Thus, PredRNN is able to preserve the temporal as well as the spatial memory for long-term motions. In this work, we use PredRNN for predicting future time steps of simulations as well as experiments, based on the given sequence of time steps.
 
-<img src="https://user-images.githubusercontent.com/27349725/78253397-02c16c80-74fd-11ea-9c7c-c565553ce631.png
-" alt=On the left the experiment input image and on the right the simulation output image with its parameters>
+<img src="https://user-images.githubusercontent.com/27349725/78253397-02c16c80-74fd-11ea-9c7c-c565553ce631.png">
 
 PredRNN prediction on a simulation and an experiment
 ### 4.1. Download links
@@ -100,70 +97,3 @@ PredRNN prediction on a simulation and an experiment
 * This is an updated model with slightly better performance than reported in the paper (~1 percent point).
 The original model can be obtained <a href="https://github.com/cvjena/semantic-embeddings/releases/download/v1.0.0/imagenet_unitsphere-embed+cls_rn50.model.h5">here</a>.
 </p>
-
-### 4.2. Pre-processing
-
-The pre-trained models provided above assume input images to be given in RGB color format and standardized by subtracting a dataset-specific channel-wise mean and dividing by a dataset-specific standard deviation.
-The means and standard deviations for each dataset are provided in the following table.
-
-|            Dataset          |                     Mean                     |            Standard Deviation            |
-|-----------------------------|----------------------------------------------|------------------------------------------|
-| CIFAR-100                   | `[129.30386353, 124.06987, 112.43356323]`    | `[68.17019653, 65.39176178, 70.4180603]` |
-| NABirds (from scratch)      | `[125.30513277, 129.66606421, 118.45121113]` | `[57.0045467, 56.70059436, 68.44430446]` |
-| CUB (from scratch)          | `[123.82988033, 127.35116805, 110.25606303]` | `[59.2230949, 58.0736071, 67.80251684]`  |
-| ILSVRC & fine-tuned models  | `[122.65435242, 116.6545058, 103.99789959]`  | `[71.40583196, 69.56888997, 73.0440314]` |
-
-### 4.3. Troubleshooting
-
-Sometimes, loading of the pre-trained models fails with the error message "unknown opcode".
-In the case of this or other issues, you can still create the architecture yourself and load the pre-trained weights from the model files provided above.
-For CIFAR-100 and the `resnet-110-wfc` architecture, for example, this can be done as follows:
-
-```python
-import keras
-import utils
-from learn_image_embeddings import cls_model
-
-model = utils.build_network(100, 'resnet-110-wfc')
-model = keras.models.Model(
-    model.inputs,
-    keras.layers.Lambda(utils.l2norm, name = 'l2norm')(model.output)
-)
-model = cls_model(model, 100)
-
-model.load_weights('cifar_unitsphere-embed+cls_resnet-110-wfc.model.h5')
-```
-
-
-[1]: https://arxiv.org/pdf/1809.09924
-[2]: https://www.cs.toronto.edu/~kriz/cifar-100-python.tar.gz
-[3]: https://www.cs.toronto.edu/~kriz/cifar.html
-[4]: http://image-net.org/challenges/LSVRC/2012/
-[5]: http://dl.allaboutbirds.org/nabirds
-[6]: https://raw.githubusercontent.com/soumith/imagenetloader.torch/master/valprep.sh
-[7]: http://hera.inf-cv.uni-jena.de:6680/pdf/Barz18:GoodTraining
-[8]: https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/He_Deep_Residual_Learning_CVPR_2016_paper.pdf
-[9]: https://arxiv.org/pdf/1605.07146.pdf
-[10]: https://ieeexplore.ieee.org/abstract/document/8100151
-[11]: https://arxiv.org/pdf/1409.1556.pdf
-[12]: http://openaccess.thecvf.com/content_cvpr_2017/papers/Huang_Densely_Connected_Convolutional_CVPR_2017_paper.pdf
-[13]: https://github.com/broadinstitute/keras-resnet
-[14]: https://github.com/broadinstitute/keras-resnet/pull/47
-[15]: https://arxiv.org/pdf/1707.07012.pdf
-[16]: https://github.com/cvjena/semantic-embeddings/releases/download/v1.0.0/cifar_unitsphere-embed+cls_plain11.model.h5
-[17]: https://github.com/cvjena/semantic-embeddings/releases/download/v1.0.0/cifar_unitsphere-embed+cls_resnet-110-fc.model.h5
-[18]: https://github.com/cvjena/semantic-embeddings/releases/download/v1.0.0/cifar_unitsphere-embed+cls_pyramidnet-272-200.model.h5
-[19]: https://github.com/cvjena/semantic-embeddings/releases/download/v1.0.0/nab_unitsphere-embed+cls_rn50.model.h5
-[20]: https://github.com/cvjena/semantic-embeddings/releases/download/v1.0.0/nab_unitsphere-embed+cls_rn50_finetuned.model.h5
-[21]: https://github.com/cvjena/semantic-embeddings/releases/download/v1.1.0/imagenet_unitsphere-embed+cls_rn50.model.h5
-[22]: http://www.vision.caltech.edu/visipedia/CUB-200-2011.html
-[23]: https://arxiv.org/pdf/1901.09054
-[24]: CosineLoss.md
-[25]: https://github.com/cvjena/semantic-embeddings/releases/download/v1.1.0/cub_unitsphere-embed+cls_deep-hierarchy_rn50.model.h5
-[26]: https://github.com/cvjena/semantic-embeddings/releases/download/v1.1.0/cub_unitsphere-embed+cls_deep-hierarchy_rn50_finetuned.model.h5
-[27]: https://github.com/cvjena/semantic-embeddings/releases/download/v1.1.0/nab-large_unitsphere-embed+cls_rn50.model.h5
-[28]: https://github.com/cvjena/semantic-embeddings/releases/download/v1.1.0/nab-large_unitsphere-embed+cls_rn50_finetuned.model.h5
-[29]: https://ai.stanford.edu/~jkrause/cars/car_dataset.html
-[30]: http://www.robots.ox.ac.uk/~vgg/data/flowers/102/index.html
-[31]: https://github.com/visipedia/inat_comp/tree/2018
-[32]: https://www.kaggle.com/c/inaturalist-2019-fgvc6/
