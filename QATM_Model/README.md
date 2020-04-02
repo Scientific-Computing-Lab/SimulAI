@@ -34,9 +34,11 @@ We use QATM to find templates of experiment images in the RayleAI Database. We u
 In order to run template matching queries, run the following jupyter notebook:
 [`run_all_templates_experiment.ipynb`](./run_all_templates_experiment.ipynb)
 
-#Other files:
+# Other files:
+
 The files: __init__.py, _config.yml, models.py, utils.py are necessary f
 for running the jupyter notebook.
+
 Files in QATM_Analysis directory:
 qatm.py - used to arrange the results of the jupyter running into json files.
 qatm_json_to_graph.py - takes the jsons, and creates graphs of qatm score with clustering results
