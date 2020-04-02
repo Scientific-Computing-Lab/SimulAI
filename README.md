@@ -1,7 +1,8 @@
 # SimulAI: Complete Deep Computer-Vision Methodology for Investigating Hydrodynamic Instabilities
 This repository contains the official source code used to produce the results reported in the following papers:
 [ourpaper]
-All models, images and data can be found in this URL: https://drive.google.com/drive/folders/1OlS5ZuTunQlkYFN0bHJczLQoNC_Gqcgr.
+All models, images and data can be found in this [URL](https://drive.google.com/drive/folders/1OlS5ZuTunQlkYFN0bHJczLQoNC_Gqcgr)
+ .
 If you use this code, please cite one of those papers (the first one when you work with hierarchy-based semantic embeddings, the second one when you use the cosine loss for classification).
 The remainder of this ReadME will contain explanation on the work, database, source codes. Whilst each folder will contain how to run the specific model.
 
@@ -41,130 +42,21 @@ The first model is the state-of-the-art database - RayleAI can be found and down
 
 ## 3. LIRE
 
-LIRE is a library that provides a way to retrieve images from databases based on color and texture characteristics among other classic features. LIRE creates a \textit{Lucene} index of image features using both local and global methods. For the evaluation of the similarity of two images, one can calculate their distance in the space they were indexed to. Many state-of-the-art methods for extracting features can be used, such as Gabor Texture Features \cite{zhang2000content}, Tamura Features \cite{tamurafeatures}, or FCTH \cite{chatzichristofis2008fcth}. For our purposes, we found that the Tamura Features method is better than the other methods that LIRE provides as it indexes \textit{RayleAI} images in a more dispersed fashion. The Tamura feature vector of an image is an 18 double values descriptor that represents texture features in the image that correspond to human visual perception.
+LIRE is a library that provides a way to retrieve images from databases based on color and texture characteristics among other classic features. LIRE creates a Lucene index of image features using both local and global methods. For the evaluation of the similarity of two images, one can calculate their distance in the space they were indexed to. Many state-of-the-art methods for extracting features can be used, such as Gabor Texture Features, Tamura Features, or FCTH. For our purposes, we found that the Tamura Features method is better than the other methods that LIRE provides as it indexes RayleAI images in a more dispersed fashion. The Tamura feature vector of an image is an 18 double values descriptor that represents texture features in the image that correspond to human visual perception.
 
 ## 4. QATM
-One variation of the Template Matching problem is defined as follows: Given an exemplar image <img src="https://render.githubusercontent.com/render/math?math=T">, find the most similar region of interest in a target image <img src="https://render.githubusercontent.com/render/math?math=S"> \cite{brunelli2009template}. Classic template matching methods often use Sum-of-Squared Differences (SSD) or Normalized Cross-Correlation (NCC) to asses the similarity score between a template and an underlying image. These approaches work well when the transformation between the template and the target search image is simple. However, with non-rigid transformations, which are common in real-life, they start to fail. Quality-Aware Template Matching (QATM) \cite{qatm} method is a standalone template matching algorithm and a trainable layer with trainable parameters that can be used in a Deep Neural Network. QATM is inspired by assessing the matching quality of the source and target templates. It defines the $QATM(t,s)$-measure as the product of likelihoods that a patch $s$ in $S$ is matched in $T$ and a patch $t$ in $T$ is matched in $S$. Once $QATM(t, s)$ is computed, we can compute the template matching map for the template image $T$ and the target search image $S$. Eventually, we can find the best-matched region ${R^*}$ which maximizes the overall matching quality. Therefore, the technique is of great need when templates are complicated and targets are noisy. Thus most suitable for RTI images from simulations and experiments.  
+
+One variation of the Template Matching problem is defined as follows: Given an exemplar image <img src="https://render.githubusercontent.com/render/math?math=T">, find the most similar region of interest in a target image <img src="https://render.githubusercontent.com/render/math?math=S">. Classic template matching methods often use Sum-of-Squared Differences (SSD) or Normalized Cross-Correlation (NCC) to asses the similarity score between a template and an underlying image. These approaches work well when the transformation between the template and the target search image is simple. However, with non-rigid transformations, which are common in real-life, they start to fail. Quality-Aware Template Matching (QATM) method is a standalone template matching algorithm and a trainable layer with trainable parameters that can be used in a Deep Neural Network. QATM is inspired by assessing the matching quality of the source and target templates. It defines the <img src="https://render.githubusercontent.com/render/math?math=QATM(t,s)"> -measure as the product of likelihoods that a patch <img src="https://render.githubusercontent.com/render/math?math=s"> in <img src="https://render.githubusercontent.com/render/math?math=S"> is matched in <img src="https://render.githubusercontent.com/render/math?math=T"> and a patch <img src="https://render.githubusercontent.com/render/math?math=t"> in <img src="https://render.githubusercontent.com/render/math?math=T"> is matched in <img src="https://render.githubusercontent.com/render/math?math=S"> . Once <img src="https://render.githubusercontent.com/render/math?math=QATM(t, s)"> is computed, we can compute the template matching map for the template image <img src="https://render.githubusercontent.com/render/math?math=T"> and the target search image <img src="https://render.githubusercontent.com/render/math?math=S">. Eventually, we can find the best-matched region <img src="https://render.githubusercontent.com/render/math?math={R^*}"> which maximizes the overall matching quality. Therefore, the technique is of great need when templates are complicated and targets are noisy. Thus most suitable for RTI images from simulations and experiments.  
 
 ## 5. InfoGAN
 
-Generative Advreserial Networks (GANs) is a framework capable to learn  network $G$, that transforms noise variable z from some noise distribution into a generated sample G(z), while training the generator is optimized against a discriminator network D, which targets to distinguish between real samples with generated ones. The fruitful competition of both G and D, in the form of MinMax game, allows $G$ to generate samples such that D will have difficulty with distinguishing real samples between them. The ability to generate indistinguishable new data in an unsupervised manner is one example of a machine learning approach that is able to understand an underlying deep, abstract and generative representation of the data. Information Maximizing Generative Adversarial Network (InfoGAN) utilizes latent code variables Ci, which are added to the noise variable. These noise variables are randomly generated, although from a user-specified domain.
-The latent variables impose an Information Theory Regularization term to the optimization problem, which forces G to preserve the information stored in ci through the generation process. This allows learning interpretative and meaningful representations of the data, with a negligible computation cost, on top of a GAN. The high-abstract-level representation can be extracted from the discriminator (e.g. the last layer before the classification) into a features vector. We use these features in order to measure the similarity between some input image to any other image, by applying some distance function (e.g. L2 norm) on the features of the input to the features of the other image. This methodology provides the ability to order images similarity to a given input image .
+Generative Advreserial Networks (GANs) is a framework capable to learn  network <img src="https://render.githubusercontent.com/render/math?math=G">, that transforms noise variable z from some noise distribution into a generated sample <img src="https://render.githubusercontent.com/render/math?math=G(z)">, while training the generator is optimized against a discriminator network <img src="https://render.githubusercontent.com/render/math?math=D">, which targets to distinguish between real samples with generated ones. The fruitful competition of both <img src="https://render.githubusercontent.com/render/math?math=G"> and <img src="https://render.githubusercontent.com/render/math?math=D">, in the form of MinMax game, allows <img src="https://render.githubusercontent.com/render/math?math=G"> to generate samples such that <img src="https://render.githubusercontent.com/render/math?math=D"> will have difficulty with distinguishing real samples between them. The ability to generate indistinguishable new data in an unsupervised manner is one example of a machine learning approach that is able to understand an underlying deep, abstract and generative representation of the data. Information Maximizing Generative Adversarial Network (InfoGAN) utilizes latent code variables <img src="https://render.githubusercontent.com/render/math?math=C_i">, which are added to the noise variable. These noise variables are randomly generated, although from a user-specified domain.
+The latent variables impose an Information Theory Regularization term to the optimization problem, which forces <img src="https://render.githubusercontent.com/render/math?math=G"> to preserve the information stored in <img src="https://render.githubusercontent.com/render/math?math=c_i"> through the generation process. This allows learning interpretative and meaningful representations of the data, with a negligible computation cost, on top of a GAN. The high-abstract-level representation can be extracted from the discriminator (e.g. the last layer before the classification) into a features vector. We use these features in order to measure the similarity between some input image to any other image, by applying some distance function (e.g. L2 norm) on the features of the input to the features of the other image. This methodology provides the ability to order images similarity to a given input image.
 
 ### 6. pReg
 Many Deep Learning techniques obtain state-of-the-art results for regression tasks, in a wide range of CV applications: Pose Estimation, Facial Landmark Detection, Age Estimation, Image Registration and Image Orientation. Most of the deep learning architectures used for regression tasks on images are Convolutional Neural Networks (ConvNets), which are usually composed of blocks of Convolutional layers followed by a Pooling layer, and finally Fully-Connected layers. The dimension of the output layer depends on the task, and its activation function is usually linear or sigmoid. 
 
-ConvNets can be used for retrieving the parameters of an experiment image, via regression. Our model consists of 3 Convolutional layers with 64 filters, with a kernel size 5 times 5, and with L2 regularization, each followed by a Max-Pooling layer, a Dropout of $0.1$ rate and finally Batch Normalization. Then, there are two Fully-Connected layers of 250 and 200 features, which are separated again by a Batch Normalization layer. Finally, the Output layer of our network has 2 features (as will described next), and is activated by sigmoid to prevent the exploding gradients problem. Since the most significant parameters for describing each image are Amplitude and Time - which \textit{pReg} is trained to predict - we used only a subset of \textit{RayleAI} for the training set, namely images with the following parameters: Atwood of [0.08, 0.5] (with a stride of 0.02), gravity of 625, 700, 750, 800, amplitude of 0.1, 0.5 (with a stride of 0.1 and T in [0.1, 0.6] (with a stride of 0.01). We fixed a small amount of values for Gravity and for Amplitude, so the network will not try and learn the variance that these parameters impose while expanding our database with as minimal noise as possible. We chose the value ranges of Atwood and Time to expose the model to images with both small and big perturbations, such that the amount of the latter ones will not be negligible. Our reduced training set consists of $\sim 16K$ images, and our validation set consists of $\sim 4K$ images. Nonetheless, for increasing generalization and for decreasing model overfitting, we employed data augmentation. Since there is high significance for the perspective from which each image is taken, the methods of data augmentation should be carefully chosen: Rotation, shifting and flipping methods may generate images such that the labels of the original parameters do not fit for them. Therefore, we augment our training set with only zooming in/out (zoom range=0.1) via TensorFlow preprocessing.
-
-#### 2.5.1. Tested
-
-For CIFAR:
-
-- **simple**: The [Plain-11][7] architecture, a strictly sequential, shallow CNN with 11 trainable layers. Good for conducting quick experiments.
-  For training this network architecture, we used `--max_decay 0.1` in addition to the other arguments provided above for the ResNet.
-  This causes a continuous decay of the learning rate so that the final learning rate will be 10 times less than the initial one.
-- **resnet-110**: The standard [ResNet-110][8].
-- **resnet-110-fc**: Like `resnet-110`, but always with a fully-connected layer after the global average pooling, even when used for learning embeddings.
-- **resnet-110-wfc**: A variant of `resnet-110-fc` with twice the number of channels per block.
-- **wrn-28-10**: A [Wide Residual Network][9] with depth 28 and width 10.
-- **pyramidnet-272-200**: A [Deep Pyramidal Residual Network][10]. Provides better performance than ResNet, but is also much slower.
-
-For ImageNet and NABirds:
-
-- **resnet-50**: The standard [ResNet-50][8] implementation from `keras-applications`.
-
-#### 2.5.2. Experimental
-
-For CIFAR:
-
-- **resnet-32**: The standard [ResNet-32][8].
-- **densenet-100-12**: A [Densely Connected Convolutional Network][12] with depth 100 and growth-rate 12.
-- **densenet-100-24**: A [Densely Connected Convolutional Network][12] with depth 100 and growth-rate 24.
-- **densenet-bc-190-40**: A [Densely Connected Convolutional Network][12] with bottleneck blocks and compression (depth 190 and growth-rate 40).
-
-For ImageNet and NABirds:
-
-- **resnet-101** and **resnet-152**: The standard implementaions of [ResNet-101 and ResNet-152][8] introduced in `keras-applications >= 1.0.7`.
-- **rn18**, **rn34**, **rn50**, **rn101**, **rn152**, **rn200**: [ResNets][8] with different depths.
-  Requires the [keras-resnet][13] package, but be aware that batch normalization is broken in version 0.1.0.
-  Thus, you need to either use an earlier or later version or merge [this pull request][14].
-- **nasnet-a**: The [NasNet-A][15] implementation from `keras-applications`.
-
-
-### 2.6. Learning semantic embeddings for ILSVRC and NABirds
-
-The previous sections have shown in detail how to learn semantic image embeddings for CIFAR-100.
-In the following, we provide the calls to [learn_image_embeddings.py](learn_image_embeddings.py) that we used to train our semantic embedding models (including classification objective) on the [ILSVRC 2012][4] and [NABirds][5] datasets.
-
-```shell
-# ILSVRC
-python learn_image_embeddings.py \
-    --dataset ILSVRC \
-    --data_root /path/to/imagenet/ \
-    --embedding embeddings/imagenet_mintree.unitsphere.pickle \
-    --architecture resnet-50 \
-    --loss inv_corr \
-    --cls_weight 0.1 \
-    --lr_schedule SGDR \
-    --sgdr_base_len 80 \
-    --epochs 80 \
-    --max_decay 0 \
-    --batch_size 128 \
-    --gpus 2 \
-    --model_dump imagenet_unitsphere-embed+cls_rn50.model.h5
-
-# NAB (from scratch)
-python learn_image_embeddings.py \
-    --dataset NAB \
-    --data_root /path/to/nab/ \
-    --embedding embeddings/nab.unitsphere.pickle \
-    --architecture resnet-50 \
-    --loss inv_corr \
-    --cls_weight 0.1 \
-    --lr_schedule SGDR \
-    --sgdr_max_lr 0.5 \
-    --max_decay 0 \
-    --epochs 180 \
-    --batch_size 128 \
-    --gpus 2 \
-    --read_workers 10 \
-    --queue_size 20 \
-    --model_dump nab_unitsphere-embed+cls_rn50.model.h5
-
-# NAB (fine-tuned)
-python learn_image_embeddings.py \
-    --dataset NAB-ilsvrcmean \
-    --data_root /path/to/nab/ \
-    --embedding embeddings/nab.unitsphere.pickle \
-    --architecture resnet-50 \
-    --loss inv_corr \
-    --cls_weight 0.1 \
-    --finetune imagenet_unitsphere-embed+cls_rn50.model.h5 \
-    --finetune_init 8 \
-    --lr_schedule SGDR \
-    --sgd_lr 0.1 \
-    --sgdr_max_lr 0.5 \
-    --max_decay 0 \
-    --epochs 180 \
-    --batch_size 128 \
-    --gpus 2 \
-    --read_workers 10 \
-    --queue_size 20 \
-    --model_dump nab_unitsphere-embed+cls_rn50_finetuned.model.h5
-```
-
-## 3. Requirements
-
-- Python >= 3.5
-- numpy
-- numexpr
-- keras >= 2.2.0
-- tensorflow (we used v1.8)
-- sklearn
-- scipy
-- pillow
-- matplotlib
-
+ConvNets can be used for retrieving the parameters of an experiment image, via regression. Our model consists of 3 Convolutional layers with 64 filters, with a kernel size 5 times 5, and with L2 regularization, each followed by a Max-Pooling layer, a Dropout of 0.1 rate and finally Batch Normalization. Then, there are two Fully-Connected layers of 250 and 200 features, which are separated again by a Batch Normalization layer. Finally, the Output layer of our network has 2 features (as will described next), and is activated by sigmoid to prevent the exploding gradients problem. Since the most significant parameters for describing each image are Amplitude and Time - which pReg is trained to predict - we used only a subset of RayleAI for the training set, namely images with the following parameters: Atwood of [0.08, 0.5] (with a stride of 0.02), gravity of 625, 700, 750, 800, amplitude of 0.1, 0.5 (with a stride of 0.1 and time in [0.1, 0.6] (with a stride of 0.01). We fixed a small amount of values for Gravity and for Amplitude, so the network will not try and learn the variance that these parameters impose while expanding our database with as minimal noise as possible. We chose the value ranges of Atwood and Time to expose the model to images with both small and big perturbations, such that the amount of the latter ones will not be negligible. Our reduced training set consists of 16K images, and our validation set consists of 4K images. Nonetheless, for increasing generalization and for decreasing model overfitting, we employed data augmentation. Since there is high significance for the perspective from which each image is taken, the methods of data augmentation should be carefully chosen: Rotation, shifting and flipping methods may generate images such that the labels of the original parameters do not fit for them. Therefore, we augment our training set with only zooming in/out (zoom range=0.1) via TensorFlow preprocessing.
 
 ## 4. Pre-trained models
 
