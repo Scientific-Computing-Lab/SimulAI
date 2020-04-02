@@ -27,7 +27,7 @@ In fluid dynamics, one of the most important research fields is hydrodynamic ins
 The techniques which were developed and proved in this work can be served as essential tools for physicists in the field of hydrodynamics for investigating a variety of physical systems, and also could be used via Transfer Learning to other instabilities research. A part of the techniques can be easily applied on already exist simulation results.
 
 <img src="https://user-images.githubusercontent.com/27349725/78000356-d2cb6b00-733c-11ea-831d-0a9b5342673a.jpg" alt=Rayleigh-Taylor Instability>
-
+Rayleigh-Taylor instability.
 
 ## 2. RayleAI Database
 The first model is the state-of-the-art database - RayleAI can be found and downloaded [here] (https://drive.google.com/drive/folders/1OlS5ZuTunQlkYFN0bHJczLQoNC_Gqcgr). The database contains thresholded images from a simulation of a simple single-mode RTI perturbation with a resolution of 64x128 cells, 2.7cm in x axis and 5.4cm in y axis, while each fluid follows the equation of state of an ideal gas. The simulation input consists of three free parameters: Atwood number, gravity and the amplitude of the perturbation. The database contains of 101,250 images produced by 1350 different simulations (75 frames each) with unique pair of the free parameters. The format of the repository is built upon directories, each represents a simulation execution with the directory name indicating the parameters of the execution.
@@ -44,20 +44,43 @@ The first model is the state-of-the-art database - RayleAI can be found and down
 
 LIRE is a library that provides a way to retrieve images from databases based on color and texture characteristics among other classic features. LIRE creates a Lucene index of image features using both local and global methods. For the evaluation of the similarity of two images, one can calculate their distance in the space they were indexed to. Many state-of-the-art methods for extracting features can be used, such as Gabor Texture Features, Tamura Features, or FCTH. For our purposes, we found that the Tamura Features method is better than the other methods that LIRE provides as it indexes RayleAI images in a more dispersed fashion. The Tamura feature vector of an image is an 18 double values descriptor that represents texture features in the image that correspond to human visual perception.
 
+<img src="https://user-images.githubusercontent.com/27349725/78253782-93984800-74fd-11ea-80ef-ba850b4b62dd.png" alt=On the left the experiment input image and on the right the simulation output image with its parameters>
+
+LIRE results with a new method evaluation - "Physical loss" (Smaller y-value is better).
+
+
 ## 4. QATM
 
-Quality-Aware Template Matching (QATM) method is a standalone template matching algorithm and a trainable layer with trainable parameters that can be used in a Deep Neural Network. QATM is inspired by assessing the matching quality of the source and target templates. It defines the <img src="https://render.githubusercontent.com/render/math?math=QATM(t,s)"> - measure as the product of likelihoods that a patch <img src="https://render.githubusercontent.com/render/math?math=s"> in <img src="https://render.githubusercontent.com/render/math?math=S"> is matched in <img src="https://render.githubusercontent.com/render/math?math=T"> and a patch <img src="https://render.githubusercontent.com/render/math?math=t"> in <img src="https://render.githubusercontent.com/render/math?math=T"> is matched in <img src="https://render.githubusercontent.com/render/math?math=S"> . Once <img src="https://render.githubusercontent.com/render/math?math=QATM(t, s)"> is computed, we can compute the template matching map for the template image <img src="https://render.githubusercontent.com/render/math?math=T"> and the target search image <img src="https://render.githubusercontent.com/render/math?math=S">. Eventually, we can find the best-matched region <img src="https://render.githubusercontent.com/render/math?math={R^*}"> which maximizes the overall matching quality. Therefore, the technique is of great need when templates are complicated and targets are noisy. Thus most suitable for RTI images from simulations and experiments.  
+Quality-Aware Template Matching (QATM) method is a standalone template matching algorithm and a trainable layer with trainable parameters that can be used in a Deep Neural Network. QATM is inspired by assessing the matching quality of the source and target templates. It defines the <img src="https://render.githubusercontent.com/render/math?math=QATM(t,s)"> - measure as the product of likelihoods that a patch <img src="https://render.githubusercontent.com/render/math?math=s"> in <img src="https://render.githubusercontent.com/render/math?math=S"> is matched in <img src="https://render.githubusercontent.com/render/math?math=T"> and a patch <img src="https://render.githubusercontent.com/render/math?math=t"> in <img src="https://render.githubusercontent.com/render/math?math=T"> is matched in <img src="https://render.githubusercontent.com/render/math?math=S"> . Once <img src="https://render.githubusercontent.com/render/math?math=QATM(t, s)"> is computed, we can compute the template matching map for the template image <img src="https://render.githubusercontent.com/render/math?math=T"> and the target search image <img src="https://render.githubusercontent.com/render/math?math=S">. Eventually, we can find the best-matched region <img src="https://render.githubusercontent.com/render/math?math={R^*}"> which maximizes the overall matching quality. Therefore, the technique is of great need when templates are complicated and targets are noisy. Thus most suitable for RTI images from simulations and experiments. 
+
+<img src="https://user-images.githubusercontent.com/27349725/78253281-cee64700-74fc-11ea-9ae3-261c04316b3f.png
+" alt=On the left the experiment input image and on the right the simulation output image with its parameters height="400px">
+
+PCA and k-means clustering methodology made on QATM results.
+
 
 ## 5. InfoGAN
 
 Generative Advreserial Networks (GANs) is a framework capable to learn  network <img src="https://render.githubusercontent.com/render/math?math=G">, that transforms noise variable z from some noise distribution into a generated sample <img src="https://render.githubusercontent.com/render/math?math=G(z)">, while training the generator is optimized against a discriminator network <img src="https://render.githubusercontent.com/render/math?math=D">, which targets to distinguish between real samples with generated ones. The fruitful competition of both <img src="https://render.githubusercontent.com/render/math?math=G"> and <img src="https://render.githubusercontent.com/render/math?math=D">, in the form of MinMax game, allows <img src="https://render.githubusercontent.com/render/math?math=G"> to generate samples such that <img src="https://render.githubusercontent.com/render/math?math=D"> will have difficulty with distinguishing real samples between them. The ability to generate indistinguishable new data in an unsupervised manner is one example of a machine learning approach that is able to understand an underlying deep, abstract and generative representation of the data. Information Maximizing Generative Adversarial Network (InfoGAN) utilizes latent code variables <img src="https://render.githubusercontent.com/render/math?math=C_i">, which are added to the noise variable. These noise variables are randomly generated, although from a user-specified domain.
 
-### 6. pReg
+<img src="https://user-images.githubusercontent.com/27349725/78253637-621f7c80-74fd-11ea-938d-625842220a8a.png
+" alt=On the left the experiment input image and on the right the simulation output image with its parameters>
+
+InfoGAN results with a new method evaluation - "Physical loss" (Smaller y-value is better).
+
+## 6. pReg
 Many Deep Learning techniques obtain state-of-the-art results for regression tasks, in a wide range of CV applications: Pose Estimation, Facial Landmark Detection, Age Estimation, Image Registration and Image Orientation. Most of the deep learning architectures used for regression tasks on images are Convolutional Neural Networks (ConvNets), which are usually composed of blocks of Convolutional layers followed by a Pooling layer, and finally Fully-Connected layers. The dimension of the output layer depends on the task, and its activation function is usually linear or sigmoid. ConvNets can be used for retrieving the parameters of an experiment image, via regression.
+
 <img src="https://user-images.githubusercontent.com/27349725/78252321-559a2480-74fb-11ea-8e65-870412691355.png" alt=On the left the experiment input image and on the right the simulation output image with its parameters  width="400px" height="400px">
+On the left the experiment input image and on the right the simulation output image with its parameters
 
-## 4. Pre-trained models
+## 7. PredRNN
+PredRNN is a state-of-the-art Recurrent Neural Network for predictive learning using LSTMs. PredRNN memorizes both spatial appearances and temporal variations in a unified memory pool. Unlike standard LSTMs, and in addition to the standard memory transition within them, memory in PredRNN can travel through the whole network in a zigzag direction, therefore from the top unit of some time step to the bottom unit of the other. Thus, PredRNN is able to preserve the temporal as well as the spatial memory for long-term motions. In this work, we use PredRNN for predicting future time steps of simulations as well as experiments, based on the given sequence of time steps.
 
+<img src="https://user-images.githubusercontent.com/27349725/78253397-02c16c80-74fd-11ea-9c7c-c565553ce631.png
+" alt=On the left the experiment input image and on the right the simulation output image with its parameters>
+
+PredRNN prediction on a simulation and an experiment
 ### 4.1. Download links
 
 |  Dataset  |              Model              | Input Size | mAHP@250 | Balanced Accuracy |
