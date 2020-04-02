@@ -36,10 +36,16 @@ In order to run template matching queries, run the following jupyter notebook:
 
 # Other files:
 
-The files: __init__.py, _config.yml, models.py, utils.py are necessary f
-for running the jupyter notebook.
+The following files are necessary for running the jupyter notebook:
+
+1) \__init__.py
+2) _config.yml
+3) models.py
+4) utils.py 
+
 
 Files in QATM_Analysis directory:
-qatm.py - used to arrange the results of the jupyter running into json files.
-qatm_json_to_graph.py - takes the jsons, and creates graphs of qatm score with clustering results
-qatm_clustering.py - responsible for clustering (PCA, k-means)
+
+1) qatm.py - used to arrange the results of the jupyter running into json files.
+2) qatm_json_to_graph.py - takes the jsons, and creates graphs of qatm score with clustering results
+3) qatm_clustering.py - responsible for clustering (PCA, k-means)
