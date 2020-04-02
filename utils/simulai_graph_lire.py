@@ -179,7 +179,6 @@ def main(json_path):
         real_time = np.float64(real_time)
         for i in range(len(comparison)):
             path = (comparison[i]["path"]).replace("=", "_")
-            dist = comparison[i]["lire_distance"]
             w[j] = (comparison[i]["lire_distance"])
             index[j] = np.int(comparison[i]["index"])
             g, amp, at, t = get_parameters(path)
