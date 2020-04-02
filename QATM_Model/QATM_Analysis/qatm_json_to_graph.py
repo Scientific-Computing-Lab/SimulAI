@@ -56,6 +56,11 @@ def plot_graph(qatm_score, index, prediction, save_basename , n_clusters):
 
     plt.xlabel("Index of matched windows")
     plt.ylabel("QATM rating")
+    plt.plot([], [], "-b", label="Cluster 1")
+    plt.plot([], [], "-r", label="Cluster 2")
+    plt.plot([], [], "-g", label="Cluster 3")
+    plt.plot([], [], "orange", label="Cluster 4")
+    plt.legend(loc="lower right")
     plt.show()
     plt.savefig("/home/yonif/SimulAI/QATM/" + save_basename + ".png")
 
@@ -73,7 +78,6 @@ def main_run():
 
         dataset = []
         qatm_score = np.zeros(60000)
-        real_template = cv2.imread(real_path, 0)
 
         for i in range(0,  60000):
             path = comparison[i]["path"]
@@ -83,15 +87,15 @@ def main_run():
             qatm_score[i] = (comparison[i]["distance"])
             dataset.append(crop_img)
 
-        clustering_object = qatm_clustering.Clustering(dataset, real_path)
+        clustering_object = qatm_clustering.QATM_Clustering(dataset, real_path)
         prediction = clustering_object.clustering()
         min_max_qatm_score = min_max_normalize(qatm_score)
         max_in_arr = max(min_max_qatm_score)
         increase_min_max_qatm_score = [max_in_arr-x for x in min_max_qatm_score]
 
-        qatm_score = min_max_normalize(qatm_score)
-        index = range(0, len(qatm_score))
-        plot_graph(qatm_score, index, prediction , os.path.basename(real_path)[:-4], 4)
+        increase_min_max_qatm_score = min_max_normalize(increase_min_max_qatm_score)
+        index = range(0, len(increase_min_max_qatm_score))
+        plot_graph(increase_min_max_qatm_score, index, prediction , os.path.basename(real_path)[:-4], 4)
         print("done - ", real_path)
         
 main_run()
