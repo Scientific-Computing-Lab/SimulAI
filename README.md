@@ -80,7 +80,7 @@ Instructions on how installation requirments, execution and more can be found in
 ## 6. pReg
 Many Deep Learning techniques obtain state-of-the-art results for regression tasks, in a wide range of CV applications: Pose Estimation, Facial Landmark Detection, Age Estimation, Image Registration and Image Orientation. Most of the deep learning architectures used for regression tasks on images are Convolutional Neural Networks (ConvNets), which are usually composed of blocks of Convolutional layers followed by a Pooling layer, and finally Fully-Connected layers. The dimension of the output layer depends on the task, and its activation function is usually linear or sigmoid. ConvNets can be used for retrieving the parameters of an experiment image, via regression.
 
-<img src="https://user-images.githubusercontent.com/27349725/78252321-559a2480-74fb-11ea-8e65-870412691355.png" alt=On the left the experiment input image and on the right the simulation output image with its parameters  width="400px" height="400px">
+<img src="https://user-images.githubusercontent.com/27349725/78252321-559a2480-74fb-11ea-8e65-870412691355.png" alt=On the left the experiment input image and on the right the simulation output image with its parameters height="400px">
 On the left the experiment input image and on the right the simulation output image with its parameters
 
 Instructions on how installation requirments, execution and more can be found in this [folder](https://github.com/scientific-computing-nrcn/SimulAI/tree/master/pReg_Model) inside the git repository
