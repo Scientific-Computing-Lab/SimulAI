@@ -29,11 +29,3 @@ To generate the intermediate features of all the images and calculate similarity
 To get images from the generator:
 `python main.py --logdir=logs/exp1 --sampledir=samples`
 
-## Results
-For each line, the first image is the seed and the rest are most similar images according to l2 distance of the intermediate features on zap50k.
-![similarity](similarity.jpg)
-
-
-
-Samples from the generator after a coulpe of epochs.
-![similarity](samples/checkpoint-68001.png)
