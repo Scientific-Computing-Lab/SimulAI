@@ -7,6 +7,10 @@ Most [recent documentation is found here at the github repo] (https://github.com
 We use LIRE to conduct image similarity queries for experiment/simulation images over the RayleAI Database.
 We compared this tool with InfoGAN, a deep learning tool for image similarity. 
 
+# Running LIRE:
+
+-- run the main function in "CBIR.java" (for example, with IntelliJ IDEA) in order to run LIRE image similarity.
+
 # Files and Directories: 
 
 1) CBIR.java - this java code is responsible for indexing the entire database into a feature space and conduct the image similarity queries. The results are wrriten into a json file.
