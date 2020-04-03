@@ -32,7 +32,9 @@ Rayleigh-Taylor instability.
 ## 2. RayleAI Database
 The first model is the state-of-the-art database - RayleAI can be found and downloaded executing the following command:
 
-`wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=156_GlmdF3jKgBaToc8eYYUTf9_bw7jlj' -O- | sed -rn 's/.confirm=([0-9A-Za-z_]+)./\1\n/p')&id=156_GlmdF3jKgBaToc8eYYUTf9_bw7jlj" -O RayleAI.tar.gz && rm -rf /tmp/cookies.txt`
+```
+wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=156_GlmdF3jKgBaToc8eYYUTf9_bw7jlj' -O- | sed -rn 's/.confirm=([0-9A-Za-z_]+)./\1\n/p')&id=156_GlmdF3jKgBaToc8eYYUTf9_bw7jlj" -O RayleAI.tar.gz && rm -rf /tmp/cookies.txt
+```
 
 or simply download in this [URL](https://drive.google.com/drive/folders/1YGPY17bej0OzM3yyP4JZgR0xJW8KmAa-)
 The database contains thresholded images from a simulation of a simple single-mode RTI perturbation with a resolution of 64x128 cells, 2.7cm in x axis and 5.4cm in y axis, while each fluid follows the equation of state of an ideal gas. The simulation input consists of three free parameters: Atwood number, gravity and the amplitude of the perturbation. The database contains of 101,250 images produced by 1350 different simulations (75 frames each) with unique pair of the free parameters. The format of the repository is built upon directories, each represents a simulation execution with the directory name indicating the parameters of the execution.
