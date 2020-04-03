@@ -31,7 +31,9 @@ Rayleigh-Taylor instability.
 ## 2. RayleAI Database
 The first model is the state-of-the-art database - RayleAI can be found and downloaded executing the following command:
 
-`wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=156_GlmdF3jKgBaToc8eYYUTf9_bw7jlj' -O- | sed -rn 's/.confirm=([0-9A-Za-z_]+)./\1\n/p')&id=156_GlmdF3jKgBaToc8eYYUTf9_bw7jlj" -O RayleAI.tar.gz && rm -rf /tmp/cookies.txt`
+```
+wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=156_GlmdF3jKgBaToc8eYYUTf9_bw7jlj' -O- | sed -rn 's/.confirm=([0-9A-Za-z_]+)./\1\n/p')&id=156_GlmdF3jKgBaToc8eYYUTf9_bw7jlj" -O RayleAI.tar.gz && rm -rf /tmp/cookies.txt
+```
 
 or simply download in this [URL](https://drive.google.com/drive/folders/1YGPY17bej0OzM3yyP4JZgR0xJW8KmAa-)
 The database contains thresholded images from a simulation of a simple single-mode RTI perturbation with a resolution of 64x128 cells, 2.7cm in x axis and 5.4cm in y axis, while each fluid follows the equation of state of an ideal gas. The simulation input consists of three free parameters: Atwood number, gravity and the amplitude of the perturbation. The database contains of 101,250 images produced by 1350 different simulations (75 frames each) with unique pair of the free parameters. The format of the repository is built upon directories, each represents a simulation execution with the directory name indicating the parameters of the execution.
@@ -53,7 +55,8 @@ LIRE is a library that provides a way to retrieve images from databases based on
 LIRE results with a new method evaluation - "Physical loss" (Smaller y-value is better).
 
 Instructions on how installation requirments, execution and more can be found in this [folder](https://github.com/scientific-computing-nrcn/SimulAI/tree/master/LIRE_Model) inside the git repository
-'''https://github.com/scientific-computing-nrcn/SimulAI/tree/master/LIRE_Model '''
+
+
 ## 4. QATM
 
 Quality-Aware Template Matching (QATM) method is a standalone template matching algorithm and a trainable layer with trainable parameters that can be used in a Deep Neural Network. QATM is inspired by assessing the matching quality of the source and target templates. It defines the <img src="https://render.githubusercontent.com/render/math?math=QATM(t,s)"> - measure as the product of likelihoods that a patch <img src="https://render.githubusercontent.com/render/math?math=s"> in <img src="https://render.githubusercontent.com/render/math?math=S"> is matched in <img src="https://render.githubusercontent.com/render/math?math=T"> and a patch <img src="https://render.githubusercontent.com/render/math?math=t"> in <img src="https://render.githubusercontent.com/render/math?math=T"> is matched in <img src="https://render.githubusercontent.com/render/math?math=S"> . Once <img src="https://render.githubusercontent.com/render/math?math=QATM(t, s)"> is computed, we can compute the template matching map for the template image <img src="https://render.githubusercontent.com/render/math?math=T"> and the target search image <img src="https://render.githubusercontent.com/render/math?math=S">. Eventually, we can find the best-matched region <img src="https://render.githubusercontent.com/render/math?math={R^*}"> which maximizes the overall matching quality. Therefore, the technique is of great need when templates are complicated and targets are noisy. Thus most suitable for RTI images from simulations and experiments. 
