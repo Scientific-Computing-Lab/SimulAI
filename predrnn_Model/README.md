@@ -4,7 +4,6 @@ Based on:
 ` https://github.com/thuml/predrnn-pytorch `
 
 PredRNN [[paper](https://papers.nips.cc/paper/6689-predrnn-recurrent-neural-networks-for-predictive-learning-using-spatiotemporal-lstms)], a recurrent network with *twisted and zigzag space-time memory cells* for video data. Given a sequence of previous frames, our model generates future frames for multiple timestamps.
-
 ## Installation
 
 This project is using the following python packages:
