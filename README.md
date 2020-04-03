@@ -109,9 +109,13 @@ Instructions on how installation requirments, execution and more can be found in
 ## 7. PredRNN
 PredRNN is a state-of-the-art Recurrent Neural Network for predictive learning using LSTMs. PredRNN memorizes both spatial appearances and temporal variations in a unified memory pool. Unlike standard LSTMs, and in addition to the standard memory transition within them, memory in PredRNN can travel through the whole network in a zigzag direction, therefore from the top unit of some time step to the bottom unit of the other. Thus, PredRNN is able to preserve the temporal as well as the spatial memory for long-term motions. In this work, we use PredRNN for predicting future time steps of simulations as well as experiments, based on the given sequence of time steps.
 
+<p align="center" style="text-align:center">
 <img src="https://user-images.githubusercontent.com/27349725/78253397-02c16c80-74fd-11ea-9c7c-c565553ce631.png">
+</p>
 
+<p align="center" style="text-align:center">
 PredRNN prediction on a simulation and an experiment
+</p>
 
 Instructions on how installation requirments, execution and more can be found in this [folder](https://github.com/scientific-computing-nrcn/SimulAI/tree/master/predrnn_Model) inside the git repository
 
