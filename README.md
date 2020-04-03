@@ -1,8 +1,7 @@
 # SimulAI: Complete Deep Computer-Vision Methodology for Investigating Hydrodynamic Instabilities
 This repository contains the official source code used to produce the results reported in the following papers:
 [ourpaper]
-All models, images and data can be found in this [URL](https://drive.google.com/drive/folders/1OlS5ZuTunQlkYFN0bHJczLQoNC_Gqcgr)
- .
+All models, images and data can be found in this [URL](https://drive.google.com/drive/folders/1OlS5ZuTunQlkYFN0bHJczLQoNC_Gqcgr).
 If you use this code, please cite one of those papers (the first one when you work with hierarchy-based semantic embeddings, the second one when you use the cosine loss for classification).
 The remainder of this ReadME will contain explanation on the work, database, source codes. Whilst each folder will contain how to run the specific model.
 
@@ -54,7 +53,7 @@ LIRE is a library that provides a way to retrieve images from databases based on
 LIRE results with a new method evaluation - "Physical loss" (Smaller y-value is better).
 
 Instructions on how installation requirments, execution and more can be found in this [folder](https://github.com/scientific-computing-nrcn/SimulAI/tree/master/LIRE_Model) inside the git repository
-
+'''https://github.com/scientific-computing-nrcn/SimulAI/tree/master/LIRE_Model '''
 ## 4. QATM
 
 Quality-Aware Template Matching (QATM) method is a standalone template matching algorithm and a trainable layer with trainable parameters that can be used in a Deep Neural Network. QATM is inspired by assessing the matching quality of the source and target templates. It defines the <img src="https://render.githubusercontent.com/render/math?math=QATM(t,s)"> - measure as the product of likelihoods that a patch <img src="https://render.githubusercontent.com/render/math?math=s"> in <img src="https://render.githubusercontent.com/render/math?math=S"> is matched in <img src="https://render.githubusercontent.com/render/math?math=T"> and a patch <img src="https://render.githubusercontent.com/render/math?math=t"> in <img src="https://render.githubusercontent.com/render/math?math=T"> is matched in <img src="https://render.githubusercontent.com/render/math?math=S"> . Once <img src="https://render.githubusercontent.com/render/math?math=QATM(t, s)"> is computed, we can compute the template matching map for the template image <img src="https://render.githubusercontent.com/render/math?math=T"> and the target search image <img src="https://render.githubusercontent.com/render/math?math=S">. Eventually, we can find the best-matched region <img src="https://render.githubusercontent.com/render/math?math={R^*}"> which maximizes the overall matching quality. Therefore, the technique is of great need when templates are complicated and targets are noisy. Thus most suitable for RTI images from simulations and experiments. 
