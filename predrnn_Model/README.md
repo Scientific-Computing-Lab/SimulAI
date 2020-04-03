@@ -18,10 +18,16 @@ You will also need a dataset, for example the RayleAI database which can be down
 ## Training
 
 To train PredRNN on all images run: 
-`sh scripts/predrnn_train.sh`
+`
+cd scripts
+sh predrnn_train.sh
+`
 
 To get the predict images run:
-`sh script/predrnn_predict.sh `
+`
+cd scripts
+sh predrnn_predict.sh
+`
 
 ## Results
 Predicted images will be generated accordingly to the scripts (default in a dir called results) and will contain files with name gtX.png - the input images and pdX.png - predicted images. 
