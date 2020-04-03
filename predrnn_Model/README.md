@@ -24,3 +24,5 @@ To train PredRNN on all images run:
 To get the predict images run:
 `sh script/predrnn_predict.sh `
 
+## Results
+Predicted images will be generated accordingly to the scripts (default in a dir called results) and will contain files with name gtX.png - the input images and pdX.png - predicted images. 
