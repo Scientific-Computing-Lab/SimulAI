@@ -42,7 +42,6 @@ wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download
 
 or simply download in this [URL](https://drive.google.com/drive/folders/1YGPY17bej0OzM3yyP4JZgR0xJW8KmAa-)
 The database contains thresholded images from a simulation of a simple single-mode RTI perturbation with a resolution of 64x128 cells, 2.7cm in x axis and 5.4cm in y axis, while each fluid follows the equation of state of an ideal gas. The simulation input consists of three free parameters: Atwood number, gravity and the amplitude of the perturbation. The database contains of 101,250 images produced by 1350 different simulations (75 frames each) with unique pair of the free parameters. The format of the repository is built upon directories, each represents a simulation execution with the directory name indicating the parameters of the execution.
-<p align="center" style="text-align:center">
 | Parameter | From | To  | Stride |           
 |---------- | ---- | --- | ------ |
 | Atwood    | 0.02 | 0.5 | 0.02   | 
@@ -50,7 +49,6 @@ The database contains thresholded images from a simulation of a simple single-mo
 | Amplitude | 0.1  | 0.5 | 0.1    |
 | X         | 2.7  | 2.7 | 0      |
 | Y         | 5.4  | 5.4 | 0      |
-</p>
 
 ## 3. LIRE
 
