@@ -48,6 +48,7 @@ LIRE is a library that provides a way to retrieve images from databases based on
 
 LIRE results with a new method evaluation - "Physical loss" (Smaller y-value is better).
 
+Instructions on how installation requirments, execution and more can be found in this [folder](https://github.com/scientific-computing-nrcn/SimulAI/tree/master/LIRE_Model) inside the git repository
 
 ## 4. QATM
 
@@ -57,6 +58,7 @@ Quality-Aware Template Matching (QATM) method is a standalone template matching 
 
 PCA and k-means clustering methodology made on QATM results.
 
+Instructions on how installation requirments, execution and more can be found in this [folder](https://github.com/scientific-computing-nrcn/SimulAI/tree/master/QATM_Model) inside the git repository
 
 ## 5. InfoGAN
 
@@ -66,11 +68,15 @@ Generative Advreserial Networks (GANs) is a framework capable to learn  network 
 
 InfoGAN results with a new method evaluation - "Physical loss" (Smaller y-value is better).
 
+Instructions on how installation requirments, execution and more can be found in this [folder](https://github.com/scientific-computing-nrcn/SimulAI/tree/master/InfoGAN_Model) inside the git repository
+
 ## 6. pReg
 Many Deep Learning techniques obtain state-of-the-art results for regression tasks, in a wide range of CV applications: Pose Estimation, Facial Landmark Detection, Age Estimation, Image Registration and Image Orientation. Most of the deep learning architectures used for regression tasks on images are Convolutional Neural Networks (ConvNets), which are usually composed of blocks of Convolutional layers followed by a Pooling layer, and finally Fully-Connected layers. The dimension of the output layer depends on the task, and its activation function is usually linear or sigmoid. ConvNets can be used for retrieving the parameters of an experiment image, via regression.
 
 <img src="https://user-images.githubusercontent.com/27349725/78252321-559a2480-74fb-11ea-8e65-870412691355.png" alt=On the left the experiment input image and on the right the simulation output image with its parameters  width="400px" height="400px">
 On the left the experiment input image and on the right the simulation output image with its parameters
+
+Instructions on how installation requirments, execution and more can be found in this [folder](https://github.com/scientific-computing-nrcn/SimulAI/tree/master/pReg_Model) inside the git repository
 
 ## 7. PredRNN
 PredRNN is a state-of-the-art Recurrent Neural Network for predictive learning using LSTMs. PredRNN memorizes both spatial appearances and temporal variations in a unified memory pool. Unlike standard LSTMs, and in addition to the standard memory transition within them, memory in PredRNN can travel through the whole network in a zigzag direction, therefore from the top unit of some time step to the bottom unit of the other. Thus, PredRNN is able to preserve the temporal as well as the spatial memory for long-term motions. In this work, we use PredRNN for predicting future time steps of simulations as well as experiments, based on the given sequence of time steps.
@@ -78,22 +84,6 @@ PredRNN is a state-of-the-art Recurrent Neural Network for predictive learning u
 <img src="https://user-images.githubusercontent.com/27349725/78253397-02c16c80-74fd-11ea-9c7c-c565553ce631.png">
 
 PredRNN prediction on a simulation and an experiment
-### 4.1. Download links
 
-|  Dataset  |              Model              | Input Size | mAHP@250 | Balanced Accuracy |
-|-----------|---------------------------------|:----------:|---------:|------------------:|
-| CIFAR-100 | [Plain-11][16]                  |    32x32   |   82.05% |            74.10% |
-| CIFAR-100 | [ResNet-110-wfc][17]            |    32x32   |   83.29% |            76.60% |
-| CIFAR-100 | [PyramidNet-272-200][18]        |    32x32   |   86.38% |            80.49% |
-| NABirds   | [ResNet-50 (from scratch)][19]  |   224x224  |   73.99% |            59.46% |
-| NABirds   | [ResNet-50 (fine-tuned)][20]    |   224x224  |   81.46% |            69.49% |
-| NABirds   | [ResNet-50 (from scratch)][27]  |   448x448  |   82.33% |            70.43% |
-| NABirds   | [ResNet-50 (fine-tuned)][28]    |   448x448  |   88.11% |            76.79% |
-| CUB       | [ResNet-50 (from scratch)][25]  |   448x448  |   83.33% |            70.14% |
-| CUB       | [ResNet-50 (fine-tuned)][26]    |   448x448  |   92.24% |            80.23% |
-| ILSVRC    | [ResNet-50][21] *               |   224x224  |   83.15% |            70.42% |
+Instructions on how installation requirments, execution and more can be found in this [folder](https://github.com/scientific-computing-nrcn/SimulAI/tree/master/predrnn_Model) inside the git repository
 
-<p style="font-size: 0.8em">
-* This is an updated model with slightly better performance than reported in the paper (~1 percent point).
-The original model can be obtained <a href="https://github.com/cvjena/semantic-embeddings/releases/download/v1.0.0/imagenet_unitsphere-embed+cls_rn50.model.h5">here</a>.
-</p>
