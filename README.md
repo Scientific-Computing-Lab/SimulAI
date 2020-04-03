@@ -25,8 +25,12 @@ The remainder of this ReadME will contain explanation on the work, database, sou
 In fluid dynamics, one of the most important research fields is hydrodynamic instabilities and their evolution in different flow regimes. The investigation of said instabilities is concerned with the highly non-linear dynamics. Currently, three main methods are used for the understanding of such phenomenon - namely analytical models, experiments and simulations - and all of them are primarily investigated and correlated using human expertise. In this work we claim and demonstrate that a major portion of this research effort could and should be analysed using recent breakthrough advancements in the field of Computer Vision with Deep Learning (CVDL or Deep Computer-Vision). Specifically, we target and evaluate specific state-of-the-art techniques - such as Image Retrieval, Template Matching, Parameters Regression and Spatiotemporal Prediction - for the quantitative and qualitative benefits they provide. In order to do so we focus in this research on one of the most representative instabilities, the Rayleigh-Taylor one, simulate its behaviour and create an open-sourced state-of-the-art annotated database RayleAI. Finally, we use adjusted experimental results and novel physical loss methodologies to validate the correspondence of the predicted results to actual physical reality to prove the models correctness.
 The techniques which were developed and proved in this work can be served as essential tools for physicists in the field of hydrodynamics for investigating a variety of physical systems, and also could be used via Transfer Learning to other instabilities research. A part of the techniques can be easily applied on already exist simulation results.
 
+<p align="center">
 <img src="https://user-images.githubusercontent.com/27349725/78000356-d2cb6b00-733c-11ea-831d-0a9b5342673a.jpg" alt=Rayleigh-Taylor Instability>
+  
 Rayleigh-Taylor instability.
+
+</p>
 
 ## 2. RayleAI Database
 The first model is the state-of-the-art database - RayleAI can be found and downloaded executing the following command:
@@ -37,6 +41,8 @@ wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download
 
 or simply download in this [URL](https://drive.google.com/drive/folders/1YGPY17bej0OzM3yyP4JZgR0xJW8KmAa-)
 The database contains thresholded images from a simulation of a simple single-mode RTI perturbation with a resolution of 64x128 cells, 2.7cm in x axis and 5.4cm in y axis, while each fluid follows the equation of state of an ideal gas. The simulation input consists of three free parameters: Atwood number, gravity and the amplitude of the perturbation. The database contains of 101,250 images produced by 1350 different simulations (75 frames each) with unique pair of the free parameters. The format of the repository is built upon directories, each represents a simulation execution with the directory name indicating the parameters of the execution.
+<p align="center">
+
 | Parameter | From | To  | Stride |           
 |---------- | ---- | --- | ------ |
 | Atwood    | 0.02 | 0.5 | 0.02   | 
@@ -44,16 +50,17 @@ The database contains thresholded images from a simulation of a simple single-mo
 | Amplitude | 0.1  | 0.5 | 0.1    |
 | X         | 2.7  | 2.7 | 0      |
 | Y         | 5.4  | 5.4 | 0      |
+</p>
 
 
 ## 3. LIRE
 
 LIRE is a library that provides a way to retrieve images from databases based on color and texture characteristics among other classic features. LIRE creates a Lucene index of image features using both local and global methods. For the evaluation of the similarity of two images, one can calculate their distance in the space they were indexed to. Many state-of-the-art methods for extracting features can be used, such as Gabor Texture Features, Tamura Features, or FCTH. For our purposes, we found that the Tamura Features method is better than the other methods that LIRE provides as it indexes RayleAI images in a more dispersed fashion. The Tamura feature vector of an image is an 18 double values descriptor that represents texture features in the image that correspond to human visual perception.
-
+<p align="center">
 <img src="https://user-images.githubusercontent.com/27349725/78253782-93984800-74fd-11ea-80ef-ba850b4b62dd.png" height="300px">
 
 LIRE results with a new method evaluation - "Physical loss" (Smaller y-value is better).
-
+</p>
 Instructions on how installation requirments, execution and more can be found in this [folder](https://github.com/scientific-computing-nrcn/SimulAI/tree/master/LIRE_Model) inside the git repository
 
 
