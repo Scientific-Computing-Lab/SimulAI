@@ -1,38 +1,58 @@
-# PredRNN (NIPS 2017)
-A PyTorch implementation of PredRNN [[paper](https://papers.nips.cc/paper/6689-predrnn-recurrent-neural-networks-for-predictive-learning-using-spatiotemporal-lstms)], a recurrent network with *twisted and zigzag space-time memory cells* for video data. Given a sequence of previous frames, our model generates future frames for multiple timestamps.
 
-Video prediction networks have been used for precipitation nowcasting, early activity recognition, physical scene understanding, model-based visual planning, and unsupervised representation learning of video data.
+# PredRNN
+Based on:
+` https://github.com/thuml/predrnn-pytorch `
 
-## Get Started
-1. Install Python 3.7, PyTorch 1.3, and OpenCV 3.4.  
+PredRNN [[paper](https://papers.nips.cc/paper/6689-predrnn-recurrent-neural-networks-for-predictive-learning-using-spatiotemporal-lstms)], a recurrent network with *twisted and zigzag space-time memory cells* for video data. Given a sequence of previous frames, our model generates future frames for multiple timestamps.
 
-2. Download data. This repo contains code for two datasets: the [Moving Mnist dataset](https://1drv.ms/f/s!AuK5cwCfU3__fGzXjcOlzTQw158) and the [KTH action dataset](http://www.nada.kth.se/cvap/actions/).  
+## Installation
 
-3. Train the model. You can use the following bash script to train the model. The learned model will be saved in the `--save_dir` folder. 
-The generated future frames will be saved in the `--gen_frm_dir` folder.  
+This project is using the following python packages:
 ```
-cd script/
-sh predrnn_mnist_train.sh
-```
-
-## Citation
-If you use this repo or our results in your research, please remember to cite the following paper.
-```
-@inproceedings{wang2017predrnn,
-  title={Predrnn: Recurrent neural networks for predictive learning using spatiotemporal lstms},
-  author={Wang, Yunbo and Long, Mingsheng and Wang, Jianmin and Gao, Zhifeng and Philip, S Yu},
-  booktitle={Advances in Neural Information Processing Systems},
-  pages={879--888},
-  year={2017}
-}
+Python=3.7
+OpenCV==3.4
+PyTorch==1.3
 ```
 
-## Related Publication
-**PredRNN++: Towards A Resolution of the Deep-in-Time Dilemma in Spatiotemporal Predictive Learning.**  
-Yunbo Wang, Zhifeng Gao, Mingsheng Long, Jianmin Wang, and Philip S. Yu.  
-ICML 2018 [[paper](http://proceedings.mlr.press/v80/wang18b.html)] [[code](https://github.com/Yunbo426/predrnn-pp)]
+You will also need a dataset, for example the RayleAI database which can be downloaded [here](https://drive.google.com/drive/folders/1YGPY17bej0OzM3yyP4JZgR0xJW8KmAa-).
 
-## Contact
-You may send email to yunbo.thu@gmail.com or longmingsheng@gmail.com, or create an issue in this repo and @wyb15. 
+## Training
 
- 
+To train PredRNN on all images run: 
+`sh scripts/predrnn_train.sh`
+or alternativley:
+`
+python3 -u run.py \
+    --device cuda\
+    --is_training 1 \
+    --dataset_name rayleai \
+    --train_data_paths /home/reemh/Simulation_Resize_refactor/train/ \
+    --valid_data_paths /home/reemh/Simulation_Resize_refactor/valid/ \
+    --save_dir checkpoints/mnist_predrnn \
+    --gen_frm_dir results/mnist_predrnn \
+    --model_name predrnn \
+    --reverse_input 1 \
+    --img_width 64 \
+    --img_channel 1 \
+    --input_length 10 \
+    --total_length 65 \
+    --num_hidden 64,64,64,64 \
+    --filter_size 5 \
+    --stride 1 \
+    --patch_size 4 \
+    --layer_norm 1 \
+    --scheduled_sampling 1 \
+    --sampling_stop_iter 50000 \
+    --sampling_start_value 1.0 \
+    --sampling_changing_rate 0.00002 \
+    --lr 0.0003 \
+    --batch_size 8 \
+    --max_iterations 80000 \
+    --display_interval 50 \
+    --test_interval 5000 \
+    --snapshot_interval 50
+`
+
+To get the predict images run:
+`sh script/predrnn_predict.sh `
+
