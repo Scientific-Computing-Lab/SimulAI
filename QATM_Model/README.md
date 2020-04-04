@@ -1,8 +1,9 @@
-# [**QATM**: Quality-Aware Template Matching for Deep Learning](http://openaccess.thecvf.com/content_CVPR_2019/papers/Cheng_QATM_Quality-Aware_Template_Matching_for_Deep_Learning_CVPR_2019_paper.pdf)
+# **QATM**: Quality-Aware Template Matching for Deep Learning
 
 
 ***
-We used the QATM DNN layer (CVPR2019). For method details, please refer to 
+We used the QATM DNN layer (CVPR2019) [Paper](http://openaccess.thecvf.com/content_CVPR_2019/papers/Cheng_QATM_Quality-Aware_Template_Matching_for_Deep_Learning_CVPR_2019_paper.pdf)
+. For method details, please refer to 
 
 ```
  @InProceedings{Cheng_2019_CVPR,
@@ -12,8 +13,11 @@ We used the QATM DNN layer (CVPR2019). For method details, please refer to
     month = {June},
     year = {2019}
     }
+
 ```
+ 
 See git repository `https://github.com/kamata1729/QATM_pytorch.git`
+
 
 # Overview
 ## What is QATM?
