@@ -2,7 +2,7 @@
 
 
 ***
-We used the QATM DNN layer (CVPR2019) [Paper](http://openaccess.thecvf.com/content_CVPR_2019/papers/Cheng_QATM_Quality-Aware_Template_Matching_for_Deep_Learning_CVPR_2019_paper.pdf)
+We used the QATM DNN layer (CVPR2019) [[Paper]](http://openaccess.thecvf.com/content_CVPR_2019/papers/Cheng_QATM_Quality-Aware_Template_Matching_for_Deep_Learning_CVPR_2019_paper.pdf)
 . For method details, please refer to 
 
 ```
