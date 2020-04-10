@@ -123,7 +123,7 @@ Instructions on how installation requirments, execution and more can be found in
 
 If you use one of the source codes please cite us via:
 
-`
+```
 @article{DBLP:journals/corr/abs-2004-03374,
   author    = {Re'em Harel and
                Matan Rusanovsky and
@@ -141,4 +141,4 @@ If you use one of the source codes please cite us via:
   biburl    = {https://dblp.org/rec/journals/corr/abs-2004-03374.bib},
   bibsource = {dblp computer science bibliography, https://dblp.org}
 }
-`
+```
