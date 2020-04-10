@@ -16,7 +16,7 @@ The remainder of this ReadME will contain explanation on the work, database, sou
 5. [InfoGAN](#5-infogan)
 6. [pReg](#5-pReg)
 7. [PredRNN](#5-predrnn)
-
+8. [Citation](#8-cite)
 </details>
 
 
@@ -119,3 +119,27 @@ PredRNN prediction on a simulation and an experiment
 
 Instructions on how installation requirments, execution and more can be found in this [folder](https://github.com/scientific-computing-nrcn/SimulAI/tree/master/predrnn_Model) inside the git repository
 
+
+## 8. Citation
+
+If you use one of the source codes please cite us via:
+
+`
+@article{DBLP:journals/corr/abs-2004-03374,
+  author    = {Re'em Harel and
+               Matan Rusanovsky and
+               Yehonatan Fridman and
+               Assaf Shimony and
+               Gal Oren},
+  title     = {Complete {CVDL} Methodology for Investigating Hydrodynamic Instabilities},
+  journal   = {CoRR},
+  volume    = {abs/2004.03374},
+  year      = {2020},
+  url       = {https://arxiv.org/abs/2004.03374},
+  archivePrefix = {arXiv},
+  eprint    = {2004.03374},
+  timestamp = {Wed, 08 Apr 2020 17:08:25 +0200},
+  biburl    = {https://dblp.org/rec/journals/corr/abs-2004-03374.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+`
