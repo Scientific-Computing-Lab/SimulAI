@@ -31,9 +31,9 @@ from tensorflow.keras.regularizers import l2
 import tensorflow as tf
 import keras
 
-gpu_options = tf.GPUOptions(allow_growth=True)
-sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
-keras.backend.tensorflow_backend.set_session(sess)
+# gpu_options = tf.GPUOptions(allow_growth=True)
+# sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
+# keras.backend.tensorflow_backend.set_session(sess)
 
 
 
@@ -183,7 +183,7 @@ def main(_):
         print("Please provide a path for the training and validation data")
         return
     if FLAGS.data[-1] == '/':
-        train_path =  FLAGS.data[:-1] + '/train/*'
+        train_path = FLAGS.data[:-1] + '/train/*'
         valid_path = FLAGS.data[:-1] + '/valid/*'
     else:
         train_path = FLAGS.data + '/train/*'
@@ -202,6 +202,7 @@ def main(_):
 
         model = tf.keras.models.load_model(FLAGS.model_name + ".h5")
 
+        # Test certain images
         predict_one_image(model,
                           "data/train_dir/train/gravity_-600_amplitude_0.1_atwood_0.1_time_0.6.png",
                           train_min_max, param_indices=params_indices)
@@ -219,16 +220,19 @@ def main(_):
 
         model = tf.keras.models.load_model(FLAGS.model_name + ".h5")
 
-        experiments = glob("/home/matanr/TradeMarker/ExperimentSmooth/gravity_-740_amplitode_unknown_atwood_0.155/*")
-        all_db = glob("/home/matanr/Simulai/smaller_db_1g_1amp/*")
+        """ Provide the desired DB, from which some random images will be searched (using parameters regression), 
+        against the entire DB """
+        input_db = "smaller_db_4g_5amp_less_time/*"
+        all_db = glob(input_db)
         random.shuffle(all_db)
         random_subset_db = all_db[:2000]
+        # random_subset_db = all_db[:10]
 
 
         show_similar_imgs_with_params(model,
                                       random_subset_db,
-                                      "/home/matanr/Simulai/all_db/*",
-                                      min_max_norm_list)
+                                      input_db,
+                                      min_max_norm_list, write_to_json=True)
 
 
 

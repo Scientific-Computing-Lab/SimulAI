@@ -46,7 +46,8 @@ def l2_dist(params, row):
     return dist
 
 
-def show_similar_imgs_with_params(model, input_imgs_list, db_path, min_max_norm_list, height=178, width=87):
+def show_similar_imgs_with_params(model, input_imgs_list, db_path, min_max_norm_list, height=178, width=87,
+                                  write_to_json=True):
     data_json = {}
     data_json['data'] = []
     for counter, input_img in enumerate(input_imgs_list):
@@ -62,17 +63,19 @@ def show_similar_imgs_with_params(model, input_imgs_list, db_path, min_max_norm_
         sorted_distances = pd.concat([pd.DataFrame(data), sorted_distances], ignore_index=True, sort=False)
         sorted_distances['index'] = sorted_distances.index.values
 
-        # similarity_view(input_img, sorted_distances,
-        #                 './params_similarity_out', min_max_norm_list)
-        # single_comparison = {}
-        # single_comparison['path'] =
-        sub_data = sorted_distances[:2000]
-        sub_data = sub_data[['path', 'distance', 'index']]
+        if not write_to_json:
+            similarity_view(input_img, sorted_distances,
+                            './params_similarity_out', min_max_norm_list)
 
-        sub_data_json = sub_data.to_json(orient='records', force_ascii=False)
-        data_json['data'].append(sub_data_json)
-    with open('regression_results.json', 'w', encoding='utf-8') as json_file:
-        json.dump(data_json, json_file, ensure_ascii=False)
+        else:
+            sub_data = sorted_distances[:2000]
+            sub_data = sub_data[['path', 'distance', 'index']]
+
+            sub_data_json = sub_data.to_json(orient='records', force_ascii=False)
+            data_json['data'].append(sub_data_json)
+    if write_to_json:
+        with open('regression_results.json', 'w', encoding='utf-8') as json_file:
+            json.dump(data_json, json_file, ensure_ascii=False)
 
 
 def similarity_view(input_img, df, similarity_output, min_max_norm_list):
@@ -83,16 +86,21 @@ def similarity_view(input_img, df, similarity_output, min_max_norm_list):
     fig, axs = plt.subplots(nrows=3, ncols=6)
     fig.subplots_adjust(hspace=2)
     # for j in range(len(data_json[i])):
+    new_path = os.path.join(similarity_output, img_name)
+    os.makedirs(new_path)
     for i, ax in enumerate(fig.axes):
         if i == 0:
             img = cv.imread(input_img)
             ax.set_axis_off()
             ax.imshow(img)
 
-            time = str(img_name).split("=")
-            base_name = os.path.basename(os.path.dirname(str(input_img)))
-            params = str(base_name).split("_")
-            name = "g:{},amp:{}\n,A:{},t:{}".format(params[1], params[3], params[5], time[1])
+            # time = str(img_name).split("=")
+            # base_name = os.path.basename(os.path.dirname(str(input_img)))
+            params = str(img_name).split("_")
+            # print(params)
+            name = "g:{},amp:{}\n,A:{},t:{}".format(params[1], params[3], params[5], params[7])
+
+            cv.imwrite(new_path + "/input_" + img_name + ".png", img)
         else:
             path = df.loc[df.index[i], 'path']
             img = cv.imread(path)
@@ -107,6 +115,9 @@ def similarity_view(input_img, df, similarity_output, min_max_norm_list):
 
             name = "g:{},amp:{}\n,A:{},t:{}".format(np.round(params[0], 2), np.round(params[1], 2), np.round(params[2], 2),
                                                     np.round(params[3], 2))
+
+            out_img_name = os.path.splitext(os.path.basename(path))[0]
+            cv.imwrite(new_path + "/" + str(i) + "_" + out_img_name + ".png", img)
         ax.set_title(str(name), pad=20)
     if similarity_output is not None:
         figure = plt.gcf()  # get current figure
