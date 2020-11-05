@@ -124,21 +124,24 @@ Instructions on how installation requirments, execution and more can be found in
 If you use one of the source codes please cite us via:
 
 ```
-@article{DBLP:journals/corr/abs-2004-03374,
-  author    = {Re'em Harel and
-               Matan Rusanovsky and
-               Yehonatan Fridman and
-               Assaf Shimony and
-               Gal Oren},
-  title     = {Complete {CVDL} Methodology for Investigating Hydrodynamic Instabilities},
-  journal   = {CoRR},
-  volume    = {abs/2004.03374},
-  year      = {2020},
-  url       = {https://arxiv.org/abs/2004.03374},
-  archivePrefix = {arXiv},
-  eprint    = {2004.03374},
-  timestamp = {Wed, 08 Apr 2020 17:08:25 +0200},
-  biburl    = {https://dblp.org/rec/journals/corr/abs-2004-03374.bib},
-  bibsource = {dblp computer science bibliography, https://dblp.org}
+@InProceedings{10.1007/978-3-030-59851-8_5,
+author="Harel, Re'em
+and Rusanovsky, Matan
+and Fridman, Yehonatan
+and Shimony, Assaf
+and Oren, Gal",
+editor="Jagode, Heike
+and Anzt, Hartwig
+and Juckeland, Guido
+and Ltaief, Hatem",
+title="Complete Deep Computer-Vision Methodology for Investigating Hydrodynamic Instabilities",
+booktitle="High Performance Computing",
+year="2020",
+publisher="Springer International Publishing",
+address="Cham",
+pages="61--80",
+abstract="In fluid dynamics, one of the most important research fields is hydrodynamic instabilities and their evolution in different flow regimes. The investigation of said instabilities is concerned with highly non-linear dynamics. Currently, three main methods are used for understanding of such phenomena -- namely analytical and statistical models, experiments, and simulations -- and all of them are primarily investigated and correlated using human expertise. This work demonstrates how a major portion of this research effort could and should be analysed using recent breakthrough advancements in the field of Computer Vision with Deep Learning (CVDL, or Deep Computer-Vision). Specifically, this work targets and evaluates specific state-of-the-art techniques -- such as Image Retrieval, Template Matching, Parameters Regression and Spatiotemporal Prediction -- for the quantitative and qualitative benefits they provide. In order to do so, this research focuses mainly on one of the most representative instabilities, the Rayleigh-Taylor instability (RTI). We include an annotated database of images returned from simulations of RTI (RayleAI). Finally, adjusted experimental results and novel physical loss methodologies were used to validate the correspondence of the predicted results to actual physical reality to evaluate the model efficiency. The techniques which were developed and proved in this work can serve as essential tools for physicists in the field of hydrodynamics for investigating a variety of physical systems. Some of them can be easily applied on already existing simulation results, while others could be used via Transfer Learning to other instabilities research. All models as well as the dataset that was created for this work, are publicly available at: https://github.com/scientific-computing-nrcn/SimulAI.",
+isbn="978-3-030-59851-8"
 }
+
 ```
