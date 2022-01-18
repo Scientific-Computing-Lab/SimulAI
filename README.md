@@ -3,7 +3,7 @@ This repository contains the official source code used to produce the results re
 All models, images and data can be found in this [URL](https://drive.google.com/drive/folders/1OlS5ZuTunQlkYFN0bHJczLQoNC_Gqcgr).
 If you use this code, please cite one of those papers (the first one when you work with hierarchy-based semantic embeddings, the second one when you use the cosine loss for classification).
 The remainder of this ReadME will contain explanation on the work, database, source codes. Whilst each folder will contain how to run the specific model.
-
+Downloading the data can also be done from this URL: [URL](https://drive.google.com/file/d/1xHGTxRmLEef2WGK_fVRn2paUCnjK2JF4/view?usp=sharing).
 
 
 <details><summary><strong>Table of Contents</strong></summary>
